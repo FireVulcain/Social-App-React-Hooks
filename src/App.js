@@ -1,13 +1,19 @@
 import React from "react";
 import "./App.css";
 
-import Test from "./components/Test";
+/* components */
+import Posts from "./components/post/Posts";
+
+/* context */
+import { GlobalProvider } from "./context/GlobalState";
 
 function App() {
     return (
-        <div className="container">
-            <Test />
-        </div>
+        <GlobalProvider>
+            <div className="container">
+                <Posts />
+            </div>
+        </GlobalProvider>
     );
 }
 
