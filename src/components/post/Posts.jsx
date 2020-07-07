@@ -13,7 +13,9 @@ const Posts = ({ firebase }) => {
             const result = await firestore.collection("posts").get();
 
             result.forEach((post) => {
-                setPosts(post.data());
+                let posts = post.data();
+                posts.id = post.id;
+                setPosts(posts);
             });
         };
 
@@ -22,8 +24,21 @@ const Posts = ({ firebase }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    console.log(state);
-    return <div></div>;
+    return (
+        <>
+            {state.data.posts.map((post) => {
+                return (
+                    <div className="post-info" key={post.id}>
+                        <div className="user-info">
+                            <img src={post.userImage} alt={post.userName} />
+                            <p>{post.userName}</p>
+                        </div>
+                        <p>{post.body}</p>
+                    </div>
+                );
+            })}
+        </>
+    );
 };
 
 export default withFirebase(Posts);
