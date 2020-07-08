@@ -7,12 +7,15 @@ import { Home } from "./views/Home";
 /* context */
 import { GlobalProvider } from "./context/GlobalState";
 
+/* Material UI*/
+import Container from "@material-ui/core/Container";
+
 function App() {
     return (
         <GlobalProvider>
-            <div className="container">
+            <Container maxWidth="lg">
                 <Home />
-            </div>
+            </Container>
         </GlobalProvider>
     );
 }

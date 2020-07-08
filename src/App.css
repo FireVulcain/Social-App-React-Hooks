@@ -1,0 +1,55 @@
+html,
+body {
+    background-color: rgb(21, 32, 43);
+}
+
+::-webkit-input-placeholder {
+    color: #9197a3 !important;
+}
+::-moz-placeholder {
+    color: #9197a3 !important;
+}
+:-ms-input-placeholder {
+    color: #9197a3 !important;
+}
+:-moz-placeholder {
+    color: #9197a3 !important;
+}
+
+.upload-post .avatar,
+.post-info .avatar {
+    width: 60px;
+    height: 60px;
+}
+
+.upload-post {
+    padding: 20px 0;
+}
+.upload-post .text-field {
+    padding: 20px 0;
+    width: 100%;
+}
+.upload-post .text-field * {
+    color: #bdc1c9;
+}
+.upload-post .text-field:hover > div::before,
+.upload-post .text-field > div::before,
+.upload-post .text-field > div::after {
+    content: "";
+    border-bottom: 0 !important;
+}
+
+.post-info:first-of-type {
+    border-top: 1px solid rgb(56, 68, 77);
+}
+.post-info {
+    padding: 10px 15px;
+    border: 1px solid rgb(56, 68, 77);
+    border-top: 0;
+}
+.post-info * {
+    color: #fff;
+}
+.post-info .post-username {
+    margin-right: 10px;
+}

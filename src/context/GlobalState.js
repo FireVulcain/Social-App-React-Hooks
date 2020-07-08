@@ -8,7 +8,11 @@ const initialState = {
     },
     user: {
         authenticated: false,
-        credentials: {},
+        credentials: {
+            userName: "Nicolas",
+            userImage:
+                "https://firebasestorage.googleapis.com/v0/b/social-app-react-hook.appspot.com/o/58682760797.png?alt=media&token=6b03e49f-9321-4c87-a6a4-24ba8ee52dae",
+        },
         likes: [],
     },
     ui: {
