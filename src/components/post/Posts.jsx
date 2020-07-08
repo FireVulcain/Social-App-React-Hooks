@@ -5,7 +5,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 //context
 import { withFirebase } from "../../config/Firebase/context";
-import { GlobalContext } from "../../context/GlobalState";
+import { GlobalContext } from "../../config/GlobalState/GlobalState";
 
 /* Material UI */
 import Box from "@material-ui/core/Box";
@@ -26,16 +26,6 @@ const Posts = ({ firebase }) => {
                 posts.id = post.id;
                 setPosts(posts);
             });
-            // await firestore
-            //     .collection("posts")
-            //     .orderBy("createdAt", "desc")
-            //     .onSnapshot((docs) => {
-            //         docs.forEach((post) => {
-            //             let posts = post.data();
-            //             posts.id = post.id;
-            //             setPosts(posts);
-            //         });
-            //     });
         };
 
         getPosts();
@@ -56,7 +46,7 @@ const Posts = ({ firebase }) => {
                                 <Typography variant="h6" component="p" className="post-username">
                                     {post.userName}
                                 </Typography>
-                                <Typography variant="body2" component="p">
+                                <Typography variant="body2" component="p" className="post-date">
                                     {dayjs(post.createdAt).fromNow()}
                                 </Typography>
                             </Box>

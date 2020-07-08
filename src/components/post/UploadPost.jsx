@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 
 //context
 import { withFirebase } from "../../config/Firebase/context";
-import { GlobalContext } from "../../context/GlobalState";
+import { GlobalContext } from "../../config/GlobalState/GlobalState";
 
 /* Material UI */
 import Box from "@material-ui/core/Box";
@@ -32,9 +32,8 @@ const UploadPost = ({ firebase }) => {
             commentCount: 0,
             createdAt: new Date().toISOString(),
             likeCount: 0,
-            userImage:
-                "https://firebasestorage.googleapis.com/v0/b/social-app-react-hook.appspot.com/o/58682760797.png?alt=media&token=6b03e49f-9321-4c87-a6a4-24ba8ee52dae",
-            userName: "Nicolas",
+            userImage: state.user.credentials.userImage,
+            userName: state.user.credentials.userName,
         });
     };
 

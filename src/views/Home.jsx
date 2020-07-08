@@ -4,7 +4,10 @@ import React from "react";
 import Posts from "./../components/post/Posts";
 import UploadPost from "./../components/post/UploadPost";
 
-export const Home = () => {
+/* Context */
+import { withAuthorization } from "./../config/Session";
+
+const Home = () => {
     return (
         <>
             <UploadPost />
@@ -12,3 +15,6 @@ export const Home = () => {
         </>
     );
 };
+
+const condition = (authUser) => !!authUser;
+export default withAuthorization(condition)(Home);

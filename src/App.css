@@ -1,3 +1,11 @@
+:root {
+    --color-light-grey: 136, 153, 166;
+    --color-green: 23, 191, 99;
+    --color-white: 255, 255, 255;
+    --color-light-red: 224, 36, 94;
+    --border-blue: 56, 68, 77;
+}
+
 html,
 body {
     background-color: rgb(21, 32, 43);
@@ -40,16 +48,66 @@ body {
 }
 
 .post-info:first-of-type {
-    border-top: 1px solid rgb(56, 68, 77);
+    border-top: 1px solid rgb(var(--border-blue));
 }
 .post-info {
     padding: 10px 15px;
-    border: 1px solid rgb(56, 68, 77);
+    border: 1px solid rgb(var(--border-blue));
     border-top: 0;
 }
 .post-info * {
-    color: #fff;
+    color: rgb(var(--color-white));
+}
+.post-info .post-date {
+    color: rgb(var(--color-light-grey));
 }
 .post-info .post-username {
     margin-right: 10px;
+}
+
+/* FORM */
+.form-container {
+    text-align: center;
+}
+.form-container h1,
+.form-container .form-input-container * {
+    color: rgb(var(--color-white));
+}
+.form-container form {
+    max-width: 520px;
+    width: 100%;
+    margin: 20px auto;
+}
+.form-container .form-input-container {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+}
+.form-container .form-input-container * {
+    width: 100%;
+}
+.form-container .form-input-container label {
+    text-align: left;
+}
+.form-container .form-input-container label.Mui-focused {
+    color: rgb(var(--color-green));
+}
+.form-container .form-input-container .MuiInput-underline:after {
+    border-color: rgb(var(--color-green));
+}
+.form-container .form-button,
+.form-container .form-button.Mui-disabled {
+    width: 100%;
+    background-color: rgb(var(--color-green));
+    color: rgb(var(--color-white));
+}
+.form-container .form-button.Mui-disabled {
+    opacity: 0.5;
+}
+.form-container .form-error {
+    margin-top: 20px;
+    color: rgb(var(--color-light-red));
+}
+.form-container .form-link {
+    color: rgb(var(--color-green));
 }
