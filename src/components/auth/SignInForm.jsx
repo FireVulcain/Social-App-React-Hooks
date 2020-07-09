@@ -5,10 +5,11 @@ import { compose } from "recompose";
 //context
 import { withFirebase } from "../../config/Firebase/context";
 
-/* Components */
+/* Material UI */
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 /* Routes */
 import * as ROUTES from "./../../constants/routes";
@@ -21,15 +22,19 @@ const INITIAL_STATE = {
 
 const SignInForm = ({ firebase, history }) => {
     const [signInState, setSignInState] = useState(INITIAL_STATE);
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = (event) => {
         event.preventDefault();
         const { email, password } = signInState;
 
+        setLoading(true);
+
         firebase
             .doSignInWithEmailAndPassword(email, password)
             .then(() => {
                 setSignInState({ ...INITIAL_STATE });
+                setLoading(false);
                 history.push(ROUTES.HOME);
             })
             .catch((error) => {
@@ -61,7 +66,7 @@ const SignInForm = ({ firebase, history }) => {
                 label="Password"
             />
             <Button className="form-button" type="submit" variant="contained" disabled={isInvalid}>
-                Log In
+                {!loading ? "Log In" : <CircularProgress size={30} />}
             </Button>
 
             {signInState.error && (

@@ -21,6 +21,10 @@ export default (state, action) => {
         case "LOGOUT_USER":
             return {
                 ...state,
+                data: {
+                    posts: [],
+                    post: {},
+                },
                 user: {
                     authenticated: false,
                     credentials: {},
