@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import { compose } from "recompose";
 
 //context
 import { withFirebase } from "../../config/Firebase/context";
@@ -71,4 +69,4 @@ const SignInForm = ({ firebase }) => {
     );
 };
 
-export default compose(withRouter, withFirebase)(SignInForm);
+export default withFirebase(SignInForm);

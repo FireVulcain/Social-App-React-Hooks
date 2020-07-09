@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import { compose } from "recompose";
 
 //context
 import { withFirebase } from "../../config/Firebase/context";
@@ -56,6 +54,7 @@ const SignUpForm = ({ firebase }) => {
                 createdAt: new Date().toISOString(),
                 email,
                 userName,
+                name: "",
                 userImage: `https://firebasestorage.googleapis.com/v0/b/${process.env.REACT_APP_STORAGE_BUCKET}/o/no-img.png?alt=media`,
                 location: "",
                 userId,
@@ -120,4 +119,4 @@ const SignUpForm = ({ firebase }) => {
     );
 };
 
-export default compose(withRouter, withFirebase)(SignUpForm);
+export default withFirebase(SignUpForm);

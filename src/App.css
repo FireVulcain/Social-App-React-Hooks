@@ -26,6 +26,37 @@ body {
     color: #9197a3 !important;
 }
 
+/* NAVBAR */
+nav.nav {
+    background-color: rgb(25, 39, 52);
+    margin-bottom: 20px;
+}
+nav ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+}
+nav ul svg.MuiSvgIcon-root {
+    fill: white;
+    width: 30px;
+    height: 30px;
+}
+
+nav ul .MuiIconButton-colorPrimary:hover {
+    background-color: rgba(29, 161, 242, 0.1);
+}
+
+nav.nav-not-logged ul li {
+    padding: 15px 0;
+    margin: 0 20px;
+}
+nav.nav-not-logged ul a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgb(var(--color-white));
+}
+
 .upload-post .avatar,
 .post-info .avatar {
     width: 60px;
