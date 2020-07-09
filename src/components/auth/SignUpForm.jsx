@@ -11,9 +11,6 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-/* Routes */
-import * as ROUTES from "./../../constants/routes";
-
 const INITIAL_STATE = {
     username: "",
     email: "",
@@ -22,31 +19,38 @@ const INITIAL_STATE = {
     error: null,
 };
 
-const SignUpForm = ({ firebase, history }) => {
+const SignUpForm = ({ firebase }) => {
     const [signUpState, setSignUpState] = useState(INITIAL_STATE);
     const [loading, setLoading] = useState(false);
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
         const { username, email, passwordOne } = signUpState;
 
         setLoading(true);
 
-        firebase
-            .doCreateUserWithEmailAndPassword(email, passwordOne)
-            .then((authUser) => {
-                uploadUser(email, username, authUser.user.uid);
-                setSignUpState({ ...INITIAL_STATE });
+        // Check if user exist
+        const snapshot = await firebase.firestore.collection("users").where("userName", "==", username).get();
+
+        // if snashop is empty, we can create the user
+        if (snapshot.empty) {
+            try {
+                const authUser = await firebase.doCreateUserWithEmailAndPassword(email, passwordOne);
+                await uploadUser(email, username, authUser.user.uid);
                 setLoading(false);
-                history.push(ROUTES.HOME);
-            })
-            .catch((error) => {
+                setSignUpState({ ...INITIAL_STATE });
+            } catch (error) {
+                setLoading(false);
                 setSignUpState((prevState) => ({ ...prevState, error }));
-            });
+            }
+        } else {
+            setLoading(false);
+            setSignUpState((prevState) => ({ ...prevState, error: { message: "userName already taken" } }));
+        }
     };
 
     const uploadUser = async (email, userName, userId) => {
-        await firebase.firestore
+        return await firebase.firestore
             .collection("users")
             .doc()
             .set({
@@ -79,7 +83,7 @@ const SignUpForm = ({ firebase, history }) => {
                 value={signUpState.username}
                 onChange={onChange}
                 type="text"
-                label="Full Name"
+                label="Username"
             />
             <TextField
                 className="form-input-container"

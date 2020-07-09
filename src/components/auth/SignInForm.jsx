@@ -11,35 +11,29 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-/* Routes */
-import * as ROUTES from "./../../constants/routes";
-
 const INITIAL_STATE = {
     email: "",
     password: "",
     error: null,
 };
 
-const SignInForm = ({ firebase, history }) => {
+const SignInForm = ({ firebase }) => {
     const [signInState, setSignInState] = useState(INITIAL_STATE);
     const [loading, setLoading] = useState(false);
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
         const { email, password } = signInState;
 
         setLoading(true);
 
-        firebase
-            .doSignInWithEmailAndPassword(email, password)
-            .then(() => {
-                setSignInState({ ...INITIAL_STATE });
-                setLoading(false);
-                history.push(ROUTES.HOME);
-            })
-            .catch((error) => {
-                setSignInState((prevState) => ({ ...prevState, error }));
-            });
+        try {
+            await firebase.doSignInWithEmailAndPassword(email, password);
+            setSignInState({ ...INITIAL_STATE });
+            setLoading(false);
+        } catch (error) {
+            setSignInState((prevState) => ({ ...prevState, error }));
+        }
     };
 
     const onChange = (event) => {
