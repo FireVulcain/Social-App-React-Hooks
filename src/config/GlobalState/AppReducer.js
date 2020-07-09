@@ -5,7 +5,7 @@ export default (state, action) => {
                 ...state,
                 data: {
                     ...state.data,
-                    posts: [...state.data.posts, action.payload],
+                    posts: action.payload,
                 },
             };
         case "SET_USER":

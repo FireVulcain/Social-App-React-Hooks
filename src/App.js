@@ -1,9 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import "./App.css";
 
 /* components */
 import Home from "./views/Home";
+import { Post } from "./views/Post";
+import { User } from "./views/User";
 import Navigation from "./components/layouts/Navigation";
 import { SignUp } from "./views/SignUp";
 import SignIn from "./views/SignIn";
@@ -20,16 +22,21 @@ import * as ROUTES from "./constants/routes";
 
 const App = () => {
     return (
-        <GlobalProvider>
-            <Router>
+        <Router>
+            <GlobalProvider>
                 <Navigation />
                 <Container maxWidth="lg">
-                    <Route exact path={ROUTES.HOME} component={Home} />
-                    <Route path={ROUTES.SIGN_UP} component={SignUp} />
-                    <Route path={ROUTES.SIGN_IN} component={SignIn} />
+                    <Switch>
+                        <Route exact path={ROUTES.HOME} component={Home} />
+                        <Route exact path={ROUTES.SIGN_UP} component={SignUp} />
+                        <Route exact path={ROUTES.SIGN_IN} component={SignIn} />
+                        <Route exact path={ROUTES.USER} component={User} />
+                        <Route exact path={ROUTES.POST} component={Post} />
+                        <Route render={() => <Redirect to="/" />} />
+                    </Switch>
                 </Container>
-            </Router>
-        </GlobalProvider>
+            </GlobalProvider>
+        </Router>
     );
 };
 

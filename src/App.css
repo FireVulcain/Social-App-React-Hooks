@@ -1,4 +1,6 @@
 :root {
+    --color-bg-dark: 21, 32, 43;
+    --color-bg-dark-hover: 25, 39, 52;
     --color-light-grey: 136, 153, 166;
     --color-green: 23, 191, 99;
     --color-white: 255, 255, 255;
@@ -8,7 +10,7 @@
 
 html,
 body {
-    background-color: rgb(21, 32, 43);
+    background-color: rgb(var(--color-bg-dark));
 }
 
 ::-webkit-input-placeholder {
@@ -54,13 +56,20 @@ body {
     padding: 10px 15px;
     border: 1px solid rgb(var(--border-blue));
     border-top: 0;
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+.post-info:hover {
+    background-color: rgb(var(--color-bg-dark-hover));
 }
 .post-info * {
     color: rgb(var(--color-white));
+    text-decoration: none;
 }
 .post-info .post-date {
     color: rgb(var(--color-light-grey));
 }
+
 .post-info .post-username {
     margin-right: 10px;
 }
