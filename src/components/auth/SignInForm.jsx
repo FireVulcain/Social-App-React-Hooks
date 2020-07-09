@@ -29,9 +29,8 @@ const SignInForm = ({ firebase }) => {
 
         try {
             await firebase.doSignInWithEmailAndPassword(email, password);
-            setSignInState({ ...INITIAL_STATE });
-            setLoading(false);
         } catch (error) {
+            setLoading(false);
             setSignInState((prevState) => ({ ...prevState, error }));
         }
     };

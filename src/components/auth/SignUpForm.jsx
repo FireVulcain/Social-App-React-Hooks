@@ -37,8 +37,6 @@ const SignUpForm = ({ firebase }) => {
             try {
                 const authUser = await firebase.doCreateUserWithEmailAndPassword(email, passwordOne);
                 await uploadUser(email, username, authUser.user.uid);
-                setLoading(false);
-                setSignUpState({ ...INITIAL_STATE });
             } catch (error) {
                 setLoading(false);
                 setSignUpState((prevState) => ({ ...prevState, error }));
