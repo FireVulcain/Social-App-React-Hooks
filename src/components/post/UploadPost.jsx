@@ -34,6 +34,7 @@ const UploadPost = ({ firebase }) => {
             likeCount: 0,
             userImage: state.user.credentials.userImage,
             userName: state.user.credentials.userName,
+            displayedName: state.user.credentials.displayedName,
         });
     };
 

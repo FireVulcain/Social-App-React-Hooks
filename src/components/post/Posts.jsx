@@ -20,17 +20,17 @@ const Posts = ({ firebase, history }) => {
 
     useEffect(() => {
         const getPosts = async () => {
-            const posts = [];
+            const result = await firestore.collection("posts").orderBy("createdAt", "desc");
 
-            const result = await firestore.collection("posts").orderBy("createdAt", "desc").get();
-
-            result.forEach((doc) => {
-                let post = doc.data();
-                post.id = doc.id;
-                posts.push(post);
+            result.onSnapshot((querySnapshot) => {
+                const posts = [];
+                querySnapshot.forEach((doc) => {
+                    let post = doc.data();
+                    post.id = doc.id;
+                    posts.push(post);
+                });
+                setPosts(posts);
             });
-
-            setPosts(posts);
         };
 
         getPosts();
@@ -66,7 +66,6 @@ const Posts = ({ firebase, history }) => {
                                     {dayjs(post.createdAt).fromNow()}
                                 </Typography>
                             </Box>
-
                             <Typography variant="body1">{post.body}</Typography>
                         </Box>
                     </Box>

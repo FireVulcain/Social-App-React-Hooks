@@ -28,10 +28,10 @@ const SignUpForm = ({ firebase }) => {
         setLoading(true);
 
         // Check if user exist
-        const snapshot = await firebase.firestore.collection("users").where("userName", "==", username).get();
+        const snapshot = await firebase.firestore.collection("users").doc(`${username}`).get();
 
-        // if snashop is empty, we can create the user
-        if (snapshot.empty) {
+        // if snashop doesn't exist, we can create the user
+        if (!snapshot.exists) {
             try {
                 const authUser = await firebase.doCreateUserWithEmailAndPassword(email, passwordOne);
                 await uploadUser(email, username, authUser.user.uid);
@@ -41,20 +41,20 @@ const SignUpForm = ({ firebase }) => {
             }
         } else {
             setLoading(false);
-            setSignUpState((prevState) => ({ ...prevState, error: { message: "userName already taken" } }));
+            setSignUpState((prevState) => ({ ...prevState, error: { message: "Username already taken" } }));
         }
     };
 
     const uploadUser = async (email, userName, userId) => {
         return await firebase.firestore
             .collection("users")
-            .doc()
+            .doc(userName)
             .set({
                 bio: "",
                 createdAt: new Date().toISOString(),
                 email,
                 userName,
-                name: "",
+                displayedName: userName,
                 userImage: `https://firebasestorage.googleapis.com/v0/b/${process.env.REACT_APP_STORAGE_BUCKET}/o/no-img.png?alt=media`,
                 location: "",
                 userId,
