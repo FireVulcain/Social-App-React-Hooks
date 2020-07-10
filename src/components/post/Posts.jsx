@@ -60,6 +60,14 @@ const Posts = ({ firebase, history }) => {
         setAnchorEl(false);
     };
 
+    const redirectToPost = (e, userName, postId) => {
+        if (e.target.tagName === "DIV" || e.target.tagName === "P") {
+            history.push(`${userName}/post/${postId}`);
+        } else {
+            return;
+        }
+    };
+
     return (
         <>
             {state.data.posts.map((post) => {
@@ -70,27 +78,40 @@ const Posts = ({ firebase, history }) => {
                         alignItems="flex-start"
                         className="post-info"
                         key={post.id}
-                        // onClick={() => history.push(`user/post/${post.id}`)}
+                        onClick={(e) => redirectToPost(e, post.userName, post.id)}
                     >
                         <Box mr={2} className="user-info">
-                            <Link to={`user/${post.userName}`} onClick={(e) => e.stopPropagation()}>
+                            <Link to={`user/${post.userName}`}>
                                 <Avatar alt={post.userName} src={post.userImage} className="avatar" />
                             </Link>
                         </Box>
                         <Box width={1}>
                             <Box display="flex" alignItems="center">
-                                <Link to={`user/${post.userName}`} onClick={(e) => e.stopPropagation()}>
-                                    <Typography variant="h6" component="p" className="post-username">
+                                <Link to={`user/${post.userName}`}>
+                                    <Typography variant="h6" component="span" className="post-username">
                                         {post.userName}
                                     </Typography>
                                 </Link>
                                 <Typography variant="body2" component="p" className="post-date">
                                     {dayjs(post.createdAt).fromNow(true)}
                                 </Typography>
-                                <IconButton onClick={(e) => handleClick(e, post.id)} className="post-toggle-menu">
+                                <IconButton
+                                    onClick={(e) => {
+                                        handleClick(e, post.id);
+                                    }}
+                                    className="post-toggle-menu"
+                                >
                                     <ExpandMoreIcon />
                                 </IconButton>
-                                <Menu className="menu-toggled" anchorEl={anchorEl} open={open === post.id} onClose={handleClose}>
+                                <Menu
+                                    className="menu-toggled"
+                                    anchorEl={anchorEl}
+                                    open={open === post.id}
+                                    onClose={(e) => {
+                                        e.stopPropagation();
+                                        handleClose();
+                                    }}
+                                >
                                     {state.user.authenticated && post.userName === state.user.credentials.userName ? (
                                         <MenuItem className="menu-item menu-item-delete">
                                             <DeletePost postId={post.id} />

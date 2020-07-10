@@ -22,6 +22,7 @@ const UploadPost = ({ firebase }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (postText === "") return;
         uploadPost();
         setPostText("");
     };
@@ -58,12 +59,12 @@ const UploadPost = ({ firebase }) => {
                         <Box display="flex" alignItems="center" justifyContent="space-between">
                             <input hidden accept="image/*" id="icon-button-file" type="file" />
                             <label htmlFor="icon-button-file">
-                                <IconButton color="primary" aria-label="upload image" component="span">
+                                <IconButton className="upload-img" aria-label="upload image" component="span">
                                     <CropOriginalOutlinedIcon />
                                 </IconButton>
                             </label>
-                            <Button type="submit" variant="contained" color="primary">
-                                Post !
+                            <Button disabled={!postText && true} type="submit" variant="contained" className="submit-button">
+                                Post
                             </Button>
                         </Box>
                     </Box>
