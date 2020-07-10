@@ -7,6 +7,9 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { withFirebase } from "../../config/Firebase/context";
 import { GlobalContext } from "../../config/GlobalState/GlobalState";
 
+//Components
+import DeletePost from "./DeletePost";
+
 /* Material UI */
 import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
@@ -48,7 +51,7 @@ const Posts = ({ firebase, history }) => {
                         alignItems="flex-start"
                         className="post-info"
                         key={post.id}
-                        onClick={() => history.push(`user/post/${post.id}`)}
+                        // onClick={() => history.push(`user/post/${post.id}`)}
                     >
                         <Box mr={2} className="user-info">
                             <Link to={`user/${post.userName}`} onClick={(e) => e.stopPropagation()}>
@@ -65,6 +68,9 @@ const Posts = ({ firebase, history }) => {
                                 <Typography variant="body2" component="p" className="post-date">
                                     {dayjs(post.createdAt).fromNow()}
                                 </Typography>
+                                {state.user.authenticated && post.userName === state.user.credentials.userName ? (
+                                    <DeletePost postId={post.id} />
+                                ) : null}
                             </Box>
                             <Typography variant="body1">{post.body}</Typography>
                         </Box>

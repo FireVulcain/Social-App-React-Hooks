@@ -9,14 +9,15 @@ import * as ROUTES from "./../../constants/routes";
 const withAuthorization = (condition) => (Component) => {
     const WithAuthorization = (props) => {
         useEffect(() => {
-            props.firebase.auth.onAuthStateChanged((authUser) => {
+            let listener = props.firebase.auth.onAuthStateChanged((authUser) => {
                 if (!condition(authUser)) {
                     props.history.push(ROUTES.SIGN_IN);
                 }
-                // else if (authUser && condition(authUser) == "not_authenticated") {
-                //     props.history.push(ROUTES.SIGN_IN);
-                // }
             });
+
+            return () => {
+                listener();
+            };
 
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);

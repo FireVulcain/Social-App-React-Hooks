@@ -27,7 +27,7 @@ const GlobalProvider = ({ firebase, children }) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
     useEffect(() => {
-        firebase.auth.onAuthStateChanged(function (user) {
+        let listener = firebase.auth.onAuthStateChanged(function (user) {
             if (user) {
                 const getUser = async (userId) => {
                     const result = await firebase.firestore.collection("users").where("userId", "==", userId).get();
@@ -45,6 +45,10 @@ const GlobalProvider = ({ firebase, children }) => {
                 });
             }
         });
+
+        return () => {
+            listener();
+        };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
