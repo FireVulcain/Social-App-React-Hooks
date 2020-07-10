@@ -84,6 +84,7 @@ nav.nav-not-logged ul a {
     border-top: 1px solid rgb(var(--border-blue));
 }
 .post-info {
+    position: relative;
     padding: 10px 15px;
     border: 1px solid rgb(var(--border-blue));
     border-top: 0;
@@ -97,12 +98,62 @@ nav.nav-not-logged ul a {
     color: rgb(var(--color-white));
     text-decoration: none;
 }
+.post-info .post-toggle-menu {
+    position: absolute;
+    right: 0;
+}
+.menu-toggled .MuiMenu-paper {
+    box-shadow: rgba(136, 153, 166, 0.2) 0px 0px 15px, rgba(136, 153, 166, 0.15) 0px 0px 3px 1px;
+    background-color: rgb(21, 32, 43);
+}
+.menu-toggled .MuiMenu-paper .MuiMenu-list {
+    padding: 0;
+}
+.menu-toggled .MuiMenu-paper .menu-item-delete:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+.menu-toggled .MuiMenu-paper .menu-item-delete button {
+    color: rgb(224, 36, 94);
+}
+
 .post-info .post-date {
     color: rgb(var(--color-light-grey));
 }
 
 .post-info .post-username {
     margin-right: 10px;
+}
+
+.delete-dialogbox * {
+    color: rgb(var(--color-white));
+}
+.delete-dialogbox .MuiDialogContentText-root {
+    color: rgb(136, 153, 166);
+}
+.delete-dialogbox .MuiPaper-root {
+    border-radius: 15px;
+    background: rgb(var(--color-bg-dark));
+}
+.delete-dialogbox h2 {
+    text-align: center;
+    font-weight: bold;
+}
+.MuiDialogActions-root.delete-action {
+    justify-content: center;
+    padding-bottom: 16px;
+}
+.delete-action .btn {
+    border-radius: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+.delete-action .btn.cancel {
+    background-color: rgb(37, 51, 65);
+}
+.delete-action .btn.delete {
+    background-color: rgb(202, 32, 85);
 }
 
 /* FORM */

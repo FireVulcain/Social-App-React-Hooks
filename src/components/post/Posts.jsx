@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -14,10 +14,19 @@ import DeletePost from "./DeletePost";
 import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+
+//Icons
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const Posts = ({ firebase, history }) => {
     const { state, setPosts } = useContext(GlobalContext);
     const { firestore } = firebase;
+
+    const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     dayjs.extend(relativeTime);
 
@@ -40,6 +49,16 @@ const Posts = ({ firebase, history }) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const handleClick = (event, postId) => {
+        setOpen(postId);
+        setAnchorEl(event.target);
+    };
+
+    const handleClose = () => {
+        setOpen(null);
+        setAnchorEl(false);
+    };
 
     return (
         <>
@@ -66,11 +85,18 @@ const Posts = ({ firebase, history }) => {
                                     </Typography>
                                 </Link>
                                 <Typography variant="body2" component="p" className="post-date">
-                                    {dayjs(post.createdAt).fromNow()}
+                                    {dayjs(post.createdAt).fromNow(true)}
                                 </Typography>
-                                {state.user.authenticated && post.userName === state.user.credentials.userName ? (
-                                    <DeletePost postId={post.id} />
-                                ) : null}
+                                <IconButton onClick={(e) => handleClick(e, post.id)} className="post-toggle-menu">
+                                    <ExpandMoreIcon />
+                                </IconButton>
+                                <Menu className="menu-toggled" anchorEl={anchorEl} open={open === post.id} onClose={handleClose}>
+                                    {state.user.authenticated && post.userName === state.user.credentials.userName ? (
+                                        <MenuItem className="menu-item menu-item-delete">
+                                            <DeletePost postId={post.id} />
+                                        </MenuItem>
+                                    ) : null}
+                                </Menu>
                             </Box>
                             <Typography variant="body1">{post.body}</Typography>
                         </Box>
