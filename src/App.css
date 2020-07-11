@@ -63,8 +63,48 @@ nav.nav-not-logged ul a {
     height: 60px;
 }
 
+.upload-post .preview-img-container,
+.post-info .post-img-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.upload-post .preview-img,
+.post-info .post-img {
+    position: relative;
+    flex-grow: 1;
+    background-size: cover;
+    background-position: center center;
+    width: 500px;
+    max-width: 500px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 30px;
+}
+.upload-post .preview-img:nth-child(1),
+.upload-post .preview-img:nth-child(2),
+.post-info .post-img:nth-child(1),
+.post-info .post-img:nth-child(2) {
+    margin-bottom: 10px;
+}
+.upload-post .preview-img:nth-child(1),
+.upload-post .preview-img:nth-child(3),
+.post-info .post-img:nth-child(1),
+.post-info .post-img:nth-child(3) {
+    margin-right: 10px;
+}
+.upload-post .preview-img img,
+.post-info .post-img img {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .upload-post {
     padding: 20px 0;
+}
+.upload-post-loading {
+    opacity: 0.2;
 }
 .upload-post .text-field {
     padding: 20px 0;
@@ -92,11 +132,22 @@ nav.nav-not-logged ul a {
     opacity: 0.5;
 }
 
-.upload-post .upload-img svg {
+.upload-post .upload-img svg,
+.upload-post .delete-img-post svg {
     fill: rgb(var(--color-green));
 }
 .upload-post .upload-img:hover {
     background: rgba(var(--color-green), 0.1);
+}
+.upload-post .delete-img-post {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+.upload-post .delete-img-post svg {
+    width: 40px;
+    height: 40px;
 }
 
 .post-info:first-of-type {

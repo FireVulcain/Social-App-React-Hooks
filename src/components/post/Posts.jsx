@@ -119,7 +119,21 @@ const Posts = ({ firebase, history }) => {
                                     ) : null}
                                 </Menu>
                             </Box>
-                            <Typography variant="body1">{post.body}</Typography>
+                            <Box>
+                                <Typography variant="body1">{post.body}</Typography>
+
+                                {post.postImg ? (
+                                    <div className="post-img-container">
+                                        {post.postImg.map((postImg, key) => {
+                                            return (
+                                                <div className="post-img" key={key} style={{ backgroundImage: `url(${postImg})` }}>
+                                                    <img src={postImg} alt="" />
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : null}
+                            </Box>
                         </Box>
                     </Box>
                 );

@@ -22,7 +22,7 @@ class Firebase {
         this.auth = app.auth();
         // this.db = app.database();
         this.firestore = app.firestore();
-        // this.storage = app.storage();
+        this.storage = app.storage();
     }
 
     // *** Auth API ***
