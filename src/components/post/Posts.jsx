@@ -9,6 +9,7 @@ import { GlobalContext } from "../../config/GlobalState/GlobalState";
 
 //Components
 import DeletePost from "./DeletePost";
+import ModalImage from "react-modal-image";
 
 /* Material UI */
 import Box from "@material-ui/core/Box";
@@ -127,7 +128,7 @@ const Posts = ({ firebase, history }) => {
                                         {post.postImg.map((postImg, key) => {
                                             return (
                                                 <div className="post-img" key={key} style={{ backgroundImage: `url(${postImg})` }}>
-                                                    <img src={postImg} alt="" />
+                                                    <ModalImage hideDownload={true} hideZoom={true} small={postImg} large={postImg} />
                                                 </div>
                                             );
                                         })}
