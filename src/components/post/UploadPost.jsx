@@ -11,6 +11,8 @@ import Avatar from "@material-ui/core/Avatar";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 /* Material UI Icons */
 import CropOriginalOutlinedIcon from "@material-ui/icons/CropOriginalOutlined";
@@ -23,6 +25,7 @@ const UploadPost = ({ firebase }) => {
     const [postText, setPostText] = useState("");
     const [uploadedImg, setUploadedImg] = useState([]);
     const [uploadLoading, setUploadLoading] = useState(false);
+    const [tooManyFiles, setTooManyFiles] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -58,6 +61,27 @@ const UploadPost = ({ firebase }) => {
             });
     };
 
+    const handleUploadFile = (e) => {
+        let files = e.target.files;
+        let imgFile = [];
+
+        if (uploadedImg.length >= 4 || files.length > 4) return setTooManyFiles(true);
+
+        for (let i = 0; i < files.length; i++) {
+            imgFile.push(e.target.files[i]);
+        }
+
+        setUploadedImg((prevState) => [...prevState, ...imgFile]);
+    };
+
+    const removeUploadedFile = (path) => {
+        const uploadedImgCopy = [...uploadedImg];
+        const index = uploadedImgCopy.indexOf(path);
+        if (index > -1) uploadedImgCopy.splice(index, 1);
+
+        return setUploadedImg(uploadedImgCopy);
+    };
+
     const uploadPost = async (postImg) => {
         await firestore.collection("posts").doc().set({
             body: postText,
@@ -71,29 +95,25 @@ const UploadPost = ({ firebase }) => {
         });
     };
 
-    const handleUploadFile = (e) => {
-        let files = e.target.files;
-        let imgFile = [];
-
-        if (uploadedImg.length >= 4 || files.length > 4) return;
-
-        for (let i = 0; i < files.length; i++) {
-            imgFile.push(e.target.files[i]);
+    const handleCloseSnackBar = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
         }
 
-        setUploadedImg((prevState) => [...prevState, ...imgFile]);
+        setTooManyFiles(false);
     };
 
-    const removeImg = (path) => {
-        const uploadedImgCopy = [...uploadedImg];
-        const index = uploadedImgCopy.indexOf(path);
-        if (index > -1) uploadedImgCopy.splice(index, 1);
-
-        return setUploadedImg(uploadedImgCopy);
+    const Alert = (props) => {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
     };
 
     return (
         <>
+            <Snackbar open={tooManyFiles} autoHideDuration={6000} onClose={handleCloseSnackBar}>
+                <Alert onClose={handleCloseSnackBar} severity="error">
+                    No more than 4 photos
+                </Alert>
+            </Snackbar>
             <form onSubmit={handleSubmit} className={"upload-post" + (uploadLoading ? " upload-post-loading" : "")}>
                 <Box display="flex" alignItems="flex-start">
                     <Box mr={2}>
@@ -115,7 +135,7 @@ const UploadPost = ({ firebase }) => {
                                         <div className="preview-img" key={key} style={{ backgroundImage: `url(${URL.createObjectURL(path)})` }}>
                                             <IconButton
                                                 className="delete-img-post"
-                                                onClick={() => removeImg(path)}
+                                                onClick={() => removeUploadedFile(path)}
                                                 aria-label="delete picture"
                                                 component="button"
                                             >

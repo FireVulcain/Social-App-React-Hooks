@@ -119,7 +119,6 @@ nav.nav-not-logged ul a {
     content: "";
     border-bottom: 0 !important;
 }
-
 .upload-post .submit-button,
 .upload-post .submit-button:disabled {
     background-color: rgb(var(--color-green));
@@ -131,7 +130,6 @@ nav.nav-not-logged ul a {
 .upload-post .submit-button:disabled {
     opacity: 0.5;
 }
-
 .upload-post .upload-img svg,
 .upload-post .delete-img-post svg {
     fill: rgb(var(--color-green));
@@ -148,6 +146,10 @@ nav.nav-not-logged ul a {
 .upload-post .delete-img-post svg {
     width: 40px;
     height: 40px;
+}
+
+.MuiAlert-filledError {
+    background-color: rgb(var(--color-green)) !important;
 }
 
 .post-info:first-of-type {
