@@ -22,6 +22,12 @@ const UploadPost = ({ firebase }) => {
     const { state } = useContext(GlobalContext);
     const { firestore } = firebase;
 
+    const {
+        user: {
+            credentials: { userName, userImage, displayedName },
+        },
+    } = state;
+
     const [postText, setPostText] = useState("");
     const [uploadedImg, setUploadedImg] = useState([]);
     const [uploadLoading, setUploadLoading] = useState(false);
@@ -39,7 +45,7 @@ const UploadPost = ({ firebase }) => {
                 const fileExtension = image.name.split(".").pop();
                 const randomName = `${uuidv4()}.${fileExtension}`;
 
-                return firebase.storage.ref(`${state.user.credentials.userName}/${randomName}`).put(image);
+                return firebase.storage.ref(`${userName}/${randomName}`).put(image);
             })
         )
             .then(async (url) => {
@@ -88,9 +94,9 @@ const UploadPost = ({ firebase }) => {
             commentCount: 0,
             createdAt: new Date().toISOString(),
             likeCount: 0,
-            userImage: state.user.credentials.userImage,
-            userName: state.user.credentials.userName,
-            displayedName: state.user.credentials.displayedName,
+            userImage: userImage,
+            userName: userName,
+            displayedName: displayedName,
             postImg,
         });
     };
@@ -117,7 +123,7 @@ const UploadPost = ({ firebase }) => {
             <form onSubmit={handleSubmit} className={"upload-post" + (uploadLoading ? " upload-post-loading" : "")}>
                 <Box display="flex" alignItems="flex-start">
                     <Box mr={2}>
-                        <Avatar alt={state.user.credentials.userName} src={state.user.credentials.userImage} className="avatar" />
+                        <Avatar alt={userName} src={userImage} className="avatar" />
                     </Box>
                     <Box width={1}>
                         <TextField

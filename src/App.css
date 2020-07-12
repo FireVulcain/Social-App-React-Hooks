@@ -196,6 +196,28 @@ nav.nav-not-logged ul a {
     background-color: transparent;
 }
 
+.post-info .post-actions {
+    margin-top: 10px;
+}
+
+.post-info .like-button-container {
+    margin-left: 50px;
+}
+.post-info .like-button-container .like-count {
+    margin-left: 4px;
+}
+.post-info .like-button-container button:hover {
+    background-color: rgba(var(--color-light-red), 0.1);
+}
+.post-info .liked-post svg,
+.post-info .like-button-container button:hover svg {
+    fill: rgb(var(--color-light-red));
+}
+.post-info .liked-post span.like-count,
+.post-info .like-button-container button:hover + span {
+    color: rgb(var(--color-light-red));
+}
+
 .menu-toggled .MuiMenu-paper {
     box-shadow: rgba(var(--color-light-grey), 0.2) 0px 0px 15px, rgba(var(--color-light-grey), 0.15) 0px 0px 3px 1px;
     background-color: rgb(21, 32, 43);
@@ -207,7 +229,7 @@ nav.nav-not-logged ul a {
     background-color: rgba(255, 255, 255, 0.03);
 }
 .menu-toggled .MuiMenu-paper .menu-item-delete button {
-    color: rgb(224, 36, 94);
+    color: rgb(var(--color-light-red));
 }
 
 .post-info .post-date {

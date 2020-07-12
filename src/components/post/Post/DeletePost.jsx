@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 //context
-import { withFirebase } from "../../config/Firebase/context";
+import { withFirebase } from "../../../config/Firebase/context";
 
 //Mui stuff
 import Button from "@material-ui/core/Button";

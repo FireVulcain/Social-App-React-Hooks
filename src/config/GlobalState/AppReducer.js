@@ -31,6 +31,14 @@ export default (state, action) => {
                     likes: [],
                 },
             };
+        case "LIKE_SCREAM":
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    likes: [...action.payload],
+                },
+            };
         default:
             return state;
     }

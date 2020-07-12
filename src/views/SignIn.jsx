@@ -17,13 +17,17 @@ const SignIn = () => {
     const { state } = useContext(GlobalContext);
     const [redirect, setRedirect] = useState(null);
 
+    const {
+        user: { authenticated, loading },
+    } = state;
+
     useEffect(() => {
-        state.user.authenticated ? setRedirect(true) : setRedirect(false);
-    }, [state.user.authenticated]);
+        authenticated ? setRedirect(true) : setRedirect(false);
+    }, [authenticated]);
 
     return (
         <>
-            {!state.user.loading ? (
+            {!loading ? (
                 redirect ? (
                     <Redirect to="/" />
                 ) : (

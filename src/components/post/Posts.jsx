@@ -8,8 +8,9 @@ import { withFirebase } from "../../config/Firebase/context";
 import { GlobalContext } from "../../config/GlobalState/GlobalState";
 
 //Components
-import DeletePost from "./DeletePost";
+import DeletePost from "./Post/DeletePost";
 import ModalImage from "react-modal-image";
+import LikeButton from "./Post/LikeButton";
 
 /* Material UI */
 import Box from "@material-ui/core/Box";
@@ -21,10 +22,19 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 //Icons
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import CommentButton from "./Post/CommentButton";
 
 const Posts = ({ firebase, history }) => {
     const { state, setPosts } = useContext(GlobalContext);
     const { firestore } = firebase;
+
+    const {
+        data: { posts },
+        user: {
+            credentials: { userName },
+            authenticated,
+        },
+    } = state;
 
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -71,7 +81,7 @@ const Posts = ({ firebase, history }) => {
 
     return (
         <>
-            {state.data.posts.map((post) => {
+            {posts.map((post) => {
                 return (
                     <Box
                         width={1}
@@ -113,7 +123,7 @@ const Posts = ({ firebase, history }) => {
                                         handleClose();
                                     }}
                                 >
-                                    {state.user.authenticated && post.userName === state.user.credentials.userName ? (
+                                    {authenticated && post.userName === userName ? (
                                         <MenuItem className="menu-item menu-item-delete">
                                             <DeletePost postId={post.id} />
                                         </MenuItem>
@@ -134,6 +144,10 @@ const Posts = ({ firebase, history }) => {
                                         })}
                                     </div>
                                 ) : null}
+                            </Box>
+                            <Box display="flex" alignItems="center" className="post-actions">
+                                <CommentButton commentCount={post.commentCount} />
+                                <LikeButton postId={post.id} userName={userName} likeCount={post.likeCount} />
                             </Box>
                         </Box>
                     </Box>
