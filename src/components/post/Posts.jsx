@@ -92,7 +92,7 @@ const Posts = ({ firebase, history }) => {
                                 <PostBody body={post.body} postImg={post.postImg} />
                             </Box>
                             <Box display="flex" alignItems="center" className="post-actions">
-                                <CommentButton commentCount={post.commentCount} />
+                                <CommentButton commentCount={post.commentCount} postId={post.id} userName={userName} userImage={post.userImage} />
                                 <LikeButton postId={post.id} userName={userName} likeCount={post.likeCount} />
                             </Box>
                         </Box>

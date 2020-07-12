@@ -111,28 +111,36 @@ nav.nav-not-logged ul a {
 .upload-post-loading {
     opacity: 0.2;
 }
-.upload-post .text-field {
+.upload-post .text-field,
+.add-reply .text-field {
     padding: 20px 0;
     width: 100%;
 }
-.upload-post .text-field * {
+.upload-post .text-field *,
+.add-reply .text-field * {
     color: #bdc1c9;
 }
 .upload-post .text-field:hover > div::before,
 .upload-post .text-field > div::before,
-.upload-post .text-field > div::after {
+.upload-post .text-field > div::after,
+.add-reply .text-field:hover > div::before,
+.add-reply .text-field > div::before,
+.add-reply .text-field > div::after {
     content: "";
     border-bottom: 0 !important;
 }
 .upload-post .submit-button,
-.upload-post .submit-button:disabled {
+.add-reply .submit-button,
+.upload-post .submit-button:disabled,
+.add-reply .submit-button:disabled {
     background-color: rgb(var(--color-green));
     border-radius: 50px;
     font-weight: bold;
     color: rgb(var(--color-white));
     text-transform: capitalize;
 }
-.upload-post .submit-button:disabled {
+.upload-post .submit-button:disabled,
+.add-reply .submit-button:disabled {
     opacity: 0.5;
 }
 .upload-post .upload-img svg,
@@ -225,6 +233,16 @@ nav.nav-not-logged ul a {
     color: rgb(var(--color-light-red));
 }
 
+.post-info .comment-button-container button:hover {
+    background-color: rgba(var(--color-blue), 0.1);
+}
+.post-info .comment-button-container button:hover svg {
+    fill: rgb(var(--color-blue));
+}
+.post-info .comment-button-container button:hover + span {
+    color: rgb(var(--color-blue));
+}
+
 .menu-toggled .MuiMenu-paper {
     box-shadow: rgba(var(--color-light-grey), 0.2) 0px 0px 15px, rgba(var(--color-light-grey), 0.15) 0px 0px 3px 1px;
     background-color: rgb(21, 32, 43);
@@ -247,18 +265,18 @@ nav.nav-not-logged ul a {
     margin-right: 10px;
 }
 
-.delete-dialogbox * {
+.dialogbox * {
     color: rgb(var(--color-white));
 }
-.delete-dialogbox .MuiDialogContentText-root {
+.dialogbox .MuiDialogContentText-root {
     color: rgb(var(--color-light-grey));
 }
-.delete-dialogbox .MuiPaper-root {
+.dialogbox .MuiPaper-root {
     border-radius: 15px;
     background: rgb(var(--color-bg-dark));
     box-shadow: none;
 }
-.delete-dialogbox h2 {
+.dialogbox h2 {
     text-align: center;
     font-weight: bold;
 }
@@ -325,4 +343,9 @@ nav.nav-not-logged ul a {
 }
 .form-container .form-link {
     color: rgb(var(--color-green));
+}
+
+/* reply */
+.add-reply .avatar {
+    margin-right: 10px;
 }
