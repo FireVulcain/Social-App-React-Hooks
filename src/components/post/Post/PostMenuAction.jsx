@@ -39,30 +39,32 @@ export const PostMenuAction = ({ postId, postUsername }) => {
 
     return (
         <>
-            <IconButton
-                onClick={(e) => {
-                    handleClick(e, postId);
-                }}
-                className="post-toggle-menu"
-                size="small"
-            >
-                <ExpandMoreIcon />
-            </IconButton>
-            <Menu
-                className="menu-toggled"
-                anchorEl={anchorEl}
-                open={open === postId}
-                onClose={(e) => {
-                    e.stopPropagation();
-                    handleClose();
-                }}
-            >
-                {authenticated && postUsername === userName ? (
-                    <MenuItem className="menu-item menu-item-delete">
-                        <DeletePost postId={postId} />
-                    </MenuItem>
-                ) : null}
-            </Menu>
+            {authenticated && postUsername === userName ? (
+                <>
+                    <IconButton
+                        onClick={(e) => {
+                            handleClick(e, postId);
+                        }}
+                        className="post-toggle-menu"
+                        size="small"
+                    >
+                        <ExpandMoreIcon />
+                    </IconButton>
+                    <Menu
+                        className="menu-toggled"
+                        anchorEl={anchorEl}
+                        open={open === postId}
+                        onClose={(e) => {
+                            e.stopPropagation();
+                            handleClose();
+                        }}
+                    >
+                        <MenuItem className="menu-item menu-item-delete">
+                            <DeletePost postId={postId} />
+                        </MenuItem>
+                    </Menu>
+                </>
+            ) : null}
         </>
     );
 };

@@ -35,7 +35,7 @@ const LikeButton = ({ firebase, postId, userName, likeCount }) => {
     }, [likeCount]);
 
     const likedPost = () => {
-        if (likes && likes.find((like) => like.postId === postId)) {
+        if (likes && likes.find((like) => like.postId === postId && like.userName === userName)) {
             return true;
         } else {
             return false;
