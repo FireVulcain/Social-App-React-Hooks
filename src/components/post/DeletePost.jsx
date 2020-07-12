@@ -25,6 +25,11 @@ const DeletePost = ({ firebase, postId }) => {
         setOpen(false);
     };
     const deleteScream = async () => {
+        const getImgs = await firestore.collection("posts").doc(postId).get();
+        getImgs.data().postImg.map((img) => {
+            const storageImg = firebase.storage.refFromURL(img);
+            return storageImg.delete();
+        });
         await firestore.collection("posts").doc(postId).delete();
     };
     return (
