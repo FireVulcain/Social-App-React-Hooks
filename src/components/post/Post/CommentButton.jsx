@@ -60,7 +60,7 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage }) 
                     </Typography>
                 ) : null}
             </div>
-            <Dialog open={open} onClick={(e) => e.stopPropagation()} onClose={handleClose} className="add-reply dialogbox" fullWidth="lg">
+            <Dialog open={open} onClick={(e) => e.stopPropagation()} onClose={handleClose} className="add-reply dialogbox" fullWidth={true}>
                 <DialogContent>
                     <Box display="flex" alignItems="center">
                         <Avatar alt={userName} src={userImage} className="avatar" />
