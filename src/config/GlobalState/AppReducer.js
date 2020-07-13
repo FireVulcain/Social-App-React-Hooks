@@ -5,7 +5,16 @@ export default (state, action) => {
                 ...state,
                 data: {
                     ...state.data,
+                    post: {},
                     posts: action.payload,
+                },
+            };
+        case "SET_POST":
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    post: action.payload,
                 },
             };
         case "SET_USER":

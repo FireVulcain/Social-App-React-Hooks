@@ -59,6 +59,12 @@ const GlobalProvider = ({ firebase, children }) => {
             payload: posts,
         });
     };
+    const setPost = (post) => {
+        dispatch({
+            type: "SET_POST",
+            payload: post,
+        });
+    };
 
     const setLikes = (likes) => {
         dispatch({
@@ -67,7 +73,7 @@ const GlobalProvider = ({ firebase, children }) => {
         });
     };
 
-    return <GlobalContext.Provider value={{ state, setPosts, setLikes }}>{children}</GlobalContext.Provider>;
+    return <GlobalContext.Provider value={{ state, setPosts, setLikes, setPost }}>{children}</GlobalContext.Provider>;
 };
 
 export default withFirebase(GlobalProvider);

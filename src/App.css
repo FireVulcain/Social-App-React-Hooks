@@ -243,6 +243,13 @@ nav.nav-not-logged ul a {
     color: rgb(var(--color-blue));
 }
 
+.post-reply .post-username {
+    font-size: 1rem;
+}
+.post-reply-to a {
+    color: rgb(var(--color-green));
+}
+
 .menu-toggled .MuiMenu-paper {
     box-shadow: rgba(var(--color-light-grey), 0.2) 0px 0px 15px, rgba(var(--color-light-grey), 0.15) 0px 0px 3px 1px;
     background-color: rgb(21, 32, 43);
