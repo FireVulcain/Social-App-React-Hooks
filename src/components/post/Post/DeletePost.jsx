@@ -52,7 +52,7 @@ const DeletePost = ({ firebase, postId }) => {
             <Button onClick={handleOpen} startIcon={<DeleteOutline />}>
                 Delete
             </Button>
-            <Dialog open={open} onClick={(e) => e.stopPropagation()} onClose={handleClose} className="dialogbox" maxWidth="xs">
+            <Dialog open={open} onClose={handleClose} className="dialogbox" maxWidth="xs">
                 <DialogTitle>Delete post?</DialogTitle>
                 <DialogContent>
                     <DialogContentText>

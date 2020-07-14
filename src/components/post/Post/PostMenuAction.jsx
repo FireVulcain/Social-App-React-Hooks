@@ -50,15 +50,7 @@ export const PostMenuAction = ({ postId, postUsername }) => {
                     >
                         <ExpandMoreIcon />
                     </IconButton>
-                    <Menu
-                        className="menu-toggled"
-                        anchorEl={anchorEl}
-                        open={open === postId}
-                        onClose={(e) => {
-                            e.stopPropagation();
-                            handleClose();
-                        }}
-                    >
+                    <Menu className="menu-toggled" anchorEl={anchorEl} open={open === postId} onClose={handleClose}>
                         <MenuItem className="menu-item menu-item-delete">
                             <DeletePost postId={postId} />
                         </MenuItem>

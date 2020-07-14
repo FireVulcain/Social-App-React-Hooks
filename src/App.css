@@ -183,6 +183,18 @@ nav.nav-not-logged ul a {
     color: rgb(var(--color-white));
     text-decoration: none;
 }
+.post-info .post-global-link {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    z-index: 0;
+}
+.post-info .post-user-link {
+    z-index: 90;
+}
 .post-info .post-toggle-menu {
     position: absolute;
     right: 10px;
@@ -243,8 +255,11 @@ nav.nav-not-logged ul a {
     color: rgb(var(--color-blue));
 }
 
-.post-reply .post-username {
+/* .post-reply .post-username {
     font-size: 1rem;
+} */
+.post-reply-to {
+    color: rgb(var(--color-light-grey));
 }
 .post-reply-to a {
     color: rgb(var(--color-green));
@@ -268,8 +283,35 @@ nav.nav-not-logged ul a {
     color: rgb(var(--color-light-grey));
 }
 
-.post-info .post-username {
+.post-info .post-displayed-name {
+    font-weight: bold;
     margin-right: 10px;
+}
+.post-info .post-username {
+    margin-right: 5px;
+    color: rgb(var(--color-light-grey));
+}
+.post-single .post-username {
+    margin-right: 0;
+    display: block;
+}
+.post-info .spacer {
+    display: inline-block;
+    font-size: 20px;
+    vertical-align: middle;
+    color: rgb(var(--color-light-grey));
+}
+
+.post-single .user-info .avatar {
+    margin-right: 10px;
+}
+.post-single .post-actions {
+    border-top: 1px solid rgb(var(--border-blue));
+    border-bottom: 1px solid rgb(var(--border-blue));
+    padding: 10px 0;
+}
+.post-single .post-date {
+    margin-top: 10px;
 }
 
 .dialogbox * {

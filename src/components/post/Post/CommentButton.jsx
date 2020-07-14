@@ -19,7 +19,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import { Avatar, Box } from "@material-ui/core";
 
-const CommentButton = ({ firebase, commentCount, postId, userName, userImage }) => {
+const CommentButton = ({ firebase, commentCount, postId, userName, userImage, displayedName }) => {
     const [open, setOpen] = useState(false);
     const [replyText, setreplyText] = useState("");
 
@@ -40,6 +40,7 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage }) 
             postId,
             userName,
             userImage,
+            displayedName,
             postImg: [],
         });
 
@@ -60,7 +61,7 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage }) 
                     </Typography>
                 ) : null}
             </div>
-            <Dialog open={open} onClick={(e) => e.stopPropagation()} onClose={handleClose} className="add-reply dialogbox" fullWidth={true}>
+            <Dialog open={open} onClose={handleClose} className="add-reply dialogbox" fullWidth={true}>
                 <DialogContent>
                     <Box display="flex" alignItems="center">
                         <Avatar alt={userName} src={userImage} className="avatar" />

@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
+//Component
+import { UserAvatar } from "./Post/UserAvatar";
+import { PostBody } from "./Post/PostBody";
+
 //context
 import { withFirebase } from "../../config/Firebase/context";
 
 // Material UI
 import Box from "@material-ui/core/Box";
-import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 
 const DisplayReply = ({ firebase, postId }) => {
@@ -39,16 +42,15 @@ const DisplayReply = ({ firebase, postId }) => {
                 ? comments.map((comment, key) => {
                       return (
                           <Box width={1} display="flex" alignItems="flex-start" className="post-info post-reply" key={key}>
-                              <Box mr={2} className="user-info">
-                                  <Link to={`/user/${comment.userName}`}>
-                                      <Avatar alt={comment.userName} src={comment.userImage} className="avatar" />
-                                  </Link>
-                              </Box>
+                              <UserAvatar userImage={comment.userImage} userName={comment.userName} />
                               <Box>
                                   <Box display="flex" alignItems="center">
                                       <Link to={`/user/${comment.userName}`}>
-                                          <Typography variant="h6" component="span" className="post-username">
-                                              {comment.userName}
+                                          <Typography variant="h6" component="span" className="post-displayed-name">
+                                              {comment.displayedName}
+                                          </Typography>
+                                          <Typography variant="body2" component="span" className="post-username">
+                                              @{comment.userName} <span className="spacer"> · </span>
                                           </Typography>
                                       </Link>
                                       <Typography variant="body2" component="p" className="post-date">
@@ -58,9 +60,7 @@ const DisplayReply = ({ firebase, postId }) => {
                                   <Typography variant="body2" component="p" className="post-reply-to">
                                       Replying to <Link to={`/user/${comment.userName}`}>@{comment.userName}</Link>
                                   </Typography>
-                                  <Typography variant="body1" component="p">
-                                      {comment.body}
-                                  </Typography>
+                                  <PostBody body={comment.body} postImg={comment.postImg} />
                               </Box>
                           </Box>
                       );

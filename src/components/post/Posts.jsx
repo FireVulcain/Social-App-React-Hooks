@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -12,13 +12,13 @@ import CommentButton from "./Post/CommentButton";
 import LikeButton from "./Post/LikeButton";
 import { PostBody } from "./Post/PostBody";
 import { PostMenuAction } from "./Post/PostMenuAction";
+import { UserAvatar } from "./Post/UserAvatar";
 
 // Material UI
 import Box from "@material-ui/core/Box";
-import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 
-const Posts = ({ firebase, history }) => {
+const Posts = ({ firebase }) => {
     const { state, setPosts } = useContext(GlobalContext);
     const { firestore } = firebase;
 
@@ -51,36 +51,21 @@ const Posts = ({ firebase, history }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const redirectToPost = (e, userName, postId) => {
-        if (e.target.tagName === "DIV" || e.target.tagName === "P") {
-            history.push(`${userName}/post/${postId}`);
-        } else {
-            return;
-        }
-    };
-
     return (
         <>
             {posts.map((post) => {
                 return (
-                    <Box
-                        width={1}
-                        display="flex"
-                        alignItems="flex-start"
-                        className="post-info"
-                        key={post.id}
-                        onClick={(e) => redirectToPost(e, post.userName, post.id)}
-                    >
-                        <Box mr={2} className="user-info">
-                            <Link to={`user/${post.userName}`}>
-                                <Avatar alt={post.userName} src={post.userImage} className="avatar" />
-                            </Link>
-                        </Box>
+                    <Box width={1} display="flex" alignItems="flex-start" className="post-info" key={post.id}>
+                        <Link className="post-global-link" to={`${userName}/post/${post.id}`}></Link>
+                        <UserAvatar userImage={post.userImage} userName={post.userName} />
                         <Box width={1}>
-                            <Box display="flex" alignItems="center">
-                                <Link to={`user/${post.userName}`}>
-                                    <Typography variant="h6" component="span" className="post-username">
-                                        {post.userName}
+                            <Box display="flex" alignItems="baseline">
+                                <Link to={`user/${post.userName}`} className="post-user-link">
+                                    <Typography variant="h6" component="span" className="post-displayed-name">
+                                        {post.displayedName}
+                                    </Typography>
+                                    <Typography variant="body2" component="span" className="post-username">
+                                        @{post.userName} <span className="spacer"> · </span>
                                     </Typography>
                                 </Link>
                                 <Typography variant="body2" component="p" className="post-date">
@@ -88,11 +73,15 @@ const Posts = ({ firebase, history }) => {
                                 </Typography>
                                 <PostMenuAction postUsername={post.userName} postId={post.id} />
                             </Box>
-                            <Box>
-                                <PostBody body={post.body} postImg={post.postImg} />
-                            </Box>
+                            <PostBody body={post.body} postImg={post.postImg} />
                             <Box display="flex" alignItems="center" className="post-actions">
-                                <CommentButton commentCount={post.commentCount} postId={post.id} userName={userName} userImage={post.userImage} />
+                                <CommentButton
+                                    displayedName={post.displayedName}
+                                    commentCount={post.commentCount}
+                                    postId={post.id}
+                                    userName={userName}
+                                    userImage={post.userImage}
+                                />
                                 <LikeButton postId={post.id} userName={userName} likeCount={post.likeCount} />
                             </Box>
                         </Box>
@@ -103,4 +92,4 @@ const Posts = ({ firebase, history }) => {
     );
 };
 
-export default withRouter(withFirebase(Posts));
+export default withFirebase(Posts);

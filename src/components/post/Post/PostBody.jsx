@@ -2,11 +2,12 @@ import React from "react";
 import ModalImage from "react-modal-image";
 
 /* Material UI */
+import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
 export const PostBody = ({ body, postImg }) => {
     return (
-        <>
+        <Box>
             <Typography variant="body1">{body}</Typography>
 
             {postImg ? (
@@ -20,6 +21,6 @@ export const PostBody = ({ body, postImg }) => {
                     })}
                 </div>
             ) : null}
-        </>
+        </Box>
     );
 };
