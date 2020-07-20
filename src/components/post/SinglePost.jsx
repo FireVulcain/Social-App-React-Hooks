@@ -20,6 +20,7 @@ import Typography from "@material-ui/core/Typography";
 
 //routes
 import * as ROUTES from "./../../constants/routes";
+import { CircularProgress } from "@material-ui/core";
 
 const SinglePost = ({ firebase, postId, history }) => {
     const { state, setPost } = useContext(GlobalContext);
@@ -45,10 +46,9 @@ const SinglePost = ({ firebase, postId, history }) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
     return (
         <>
-            {state.data.post ? (
+            {Object.entries(state.data.post).length !== 0 ? (
                 <>
                     <Box width={1} className="post-info post-single" key={postId}>
                         <PostMenuAction postUsername={userName} postId={postId} />
@@ -90,7 +90,11 @@ const SinglePost = ({ firebase, postId, history }) => {
                         <DisplayReply postId={postId} />
                     </Box>
                 </>
-            ) : null}
+            ) : (
+                <Box width={1} display="flex" justifyContent="center">
+                    <CircularProgress />
+                </Box>
+            )}
         </>
     );
 };
