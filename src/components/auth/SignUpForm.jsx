@@ -56,6 +56,7 @@ const SignUpForm = ({ firebase }) => {
                 userName,
                 displayedName: userName,
                 userImage: `https://firebasestorage.googleapis.com/v0/b/${process.env.REACT_APP_STORAGE_BUCKET}/o/no-img.png?alt=media`,
+                userBanner: "",
                 location: "",
                 userId,
                 website: "",

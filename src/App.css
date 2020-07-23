@@ -267,7 +267,7 @@ nav.nav-not-logged ul a {
 
 .menu-toggled .MuiMenu-paper {
     box-shadow: rgba(var(--color-light-grey), 0.2) 0px 0px 15px, rgba(var(--color-light-grey), 0.15) 0px 0px 3px 1px;
-    background-color: rgb(21, 32, 43);
+    background-color: rgb(var(--color-bg-dark));
 }
 .menu-toggled .MuiMenu-paper .MuiMenu-list {
     padding: 0;
@@ -312,6 +312,13 @@ nav.nav-not-logged ul a {
 }
 .post-single .post-date {
     margin-top: 10px;
+}
+
+.post-info.post-single {
+    cursor: default;
+}
+.post-info.post-single:hover {
+    background-color: transparent;
 }
 
 .dialogbox * {
@@ -397,4 +404,68 @@ nav.nav-not-logged ul a {
 /* reply */
 .add-reply .avatar {
     margin-right: 10px;
+}
+
+/* User page */
+.user-banner {
+    padding-bottom: 20px;
+    border: 1px solid rgb(var(--border-blue));
+}
+.banner-img {
+    background-color: rgb(61, 84, 102);
+    min-height: 200px;
+}
+.banner-info {
+    margin-top: -67px;
+    padding: 0 30px;
+}
+.banner-info img {
+    width: 134px;
+    border: 4px solid rgb(var(--color-bg-dark));
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+}
+.banner-info .user-displayedName {
+    color: rgb(var(--color-white));
+    font-weight: bold;
+    font-size: 24px;
+}
+.banner-info .user-userName,
+.banner-info .user-location,
+.banner-info .user-joined {
+    color: rgb(var(--color-light-grey));
+    font-size: 15px;
+}
+.banner-info .user-website,
+.banner-info .user-location,
+.banner-info .user-joined {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+.banner-info .user-website svg,
+.banner-info .user-location svg,
+.banner-info .user-joined svg {
+    fill: rgb(var(--color-light-grey));
+    margin-right: 5px;
+}
+
+.banner-info .user-bio {
+    font-size: 15px;
+    margin-top: 8px;
+    color: rgb(var(--color-white));
+}
+
+.banner-info .user-location {
+    margin-left: -5px;
+}
+.banner-info .user-website {
+    color: rgba(29, 161, 242, 1);
+    text-decoration: none;
+}
+.banner-info .user-website:hover {
+    text-decoration: underline;
 }

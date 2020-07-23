@@ -18,7 +18,7 @@ import { UserAvatar } from "./Post/UserAvatar";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-const Posts = ({ firebase }) => {
+const Posts = ({ firebase, userNamePosts }) => {
     const { state, setPosts } = useContext(GlobalContext);
     const { firestore } = firebase;
 
@@ -33,7 +33,12 @@ const Posts = ({ firebase }) => {
 
     useEffect(() => {
         const getPosts = async () => {
-            const result = await firestore.collection("posts").orderBy("createdAt", "desc");
+            let result;
+            if (userNamePosts) {
+                result = await firestore.collection("posts").where("userName", "==", userNamePosts).orderBy("createdAt", "desc");
+            } else {
+                result = await firestore.collection("posts").orderBy("createdAt", "desc");
+            }
 
             result.onSnapshot((querySnapshot) => {
                 const posts = [];
@@ -56,11 +61,11 @@ const Posts = ({ firebase }) => {
             {posts.map((post) => {
                 return (
                     <Box width={1} display="flex" alignItems="flex-start" className="post-info" key={post.id}>
-                        <Link className="post-global-link" to={`${userName}/post/${post.id}`}></Link>
+                        <Link className="post-global-link" to={`/${userName}/post/${post.id}`}></Link>
                         <UserAvatar userImage={post.userImage} userName={post.userName} />
                         <Box width={1}>
                             <Box display="flex" alignItems="baseline">
-                                <Link to={`user/${post.userName}`} className="post-user-link">
+                                <Link to={`/user/${post.userName}`} className="post-user-link">
                                     <Typography variant="h6" component="span" className="post-displayed-name">
                                         {post.displayedName}
                                     </Typography>
