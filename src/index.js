@@ -6,10 +6,10 @@ import "./reset.css";
 import Firebase, { FirebaseContext } from "./config/Firebase";
 
 ReactDOM.render(
-    <React.StrictMode>
+    <React.Fragment>
         <FirebaseContext.Provider value={new Firebase()}>
             <App />
         </FirebaseContext.Provider>
-    </React.StrictMode>,
+    </React.Fragment>,
     document.getElementById("root")
 );

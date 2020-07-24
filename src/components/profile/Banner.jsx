@@ -13,24 +13,39 @@ import { withFirebase } from "./../../config/Firebase/context";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+
+/* Material UI Icons*/
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import LinkIcon from "@material-ui/icons/Link";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
+import EditProfile from "./EditProfile";
 
-const Banner = ({ firebase, userName, history }) => {
+const Banner = ({ firebase, userName, loggedUser, history }) => {
     const [user, setUser] = useState({});
-    useEffect(() => {
-        const getUser = async () => {
-            const result = await firebase.firestore.collection("users").doc(userName);
+    const [isUserProfile, setIsUserProfile] = useState(false);
+    const [open, setOpen] = useState(false);
 
-            result.onSnapshot((querySnapshot) => {
+    const handleClose = () => {
+        setOpen(false);
+    };
+    useEffect(() => {
+        const result = firebase.firestore
+            .collection("users")
+            .doc(userName)
+            .onSnapshot((querySnapshot) => {
                 if (!querySnapshot.exists) return history.push(ROUTES.HOME);
                 setUser(querySnapshot.data());
             });
-        };
 
-        getUser();
-    }, [userName, firebase.firestore, history]);
+        return () => {
+            result();
+        };
+    }, [userName, history, firebase.firestore]);
+
+    useEffect(() => {
+        if (userName === loggedUser) return setIsUserProfile(true);
+    }, [loggedUser, userName]);
 
     return (
         <>
@@ -40,7 +55,15 @@ const Banner = ({ firebase, userName, history }) => {
                 </Box>
             ) : (
                 <div className="user-banner">
-                    <div className="banner-img" style={{ backgroundImage: `url(${user.userBanner})` }}></div>
+                    <div
+                        className="banner-img"
+                        style={{
+                            backgroundImage: `url(${user.userBanner})`,
+                            backgroundPosition: "center",
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                        }}
+                    ></div>
                     <div className="banner-info">
                         <img src={user.userImage} alt={`${user.userName}`} />
                         <Typography variant="body2" className="user-displayedName">
@@ -65,6 +88,14 @@ const Banner = ({ firebase, userName, history }) => {
                                 <CalendarTodayIcon fontSize="small" /> Joined {dayjs(user.createdAt).format("MMMM YYYY")}
                             </Typography>
                         </Box>
+                        {isUserProfile ? (
+                            <>
+                                <Button onClick={() => setOpen(true)} variant="contained" className="edit-profile-button">
+                                    Edit profile
+                                </Button>
+                                <EditProfile open={open} handleClose={handleClose} user={user} firebase={firebase} />
+                            </>
+                        ) : null}
                     </div>
                 </div>
             )}

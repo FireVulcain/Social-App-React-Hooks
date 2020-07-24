@@ -54,7 +54,7 @@ const Posts = ({ firebase, userNamePosts }) => {
         getPosts();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userNamePosts]);
 
     return (
         <>

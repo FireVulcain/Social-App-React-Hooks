@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 
 /* Context */
+import { GlobalContext } from "./../config/GlobalState/GlobalState";
 import { withAuthorization } from "./../config/Session";
 
 /* Component */
@@ -8,11 +9,12 @@ import Banner from "./../components/profile/Banner";
 import Posts from "./../components/post/Posts";
 
 const User = (props) => {
-    const userName = props.match.params.userName;
+    const { state } = useContext(GlobalContext);
+
     return (
         <div>
-            <Banner userName={userName} />
-            <Posts userNamePosts={userName} />
+            <Banner userName={props.match.params.userName} loggedUser={state.user.credentials.userName} />
+            <Posts userNamePosts={props.match.params.userName} />
         </div>
     );
 };
