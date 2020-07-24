@@ -4,10 +4,6 @@ import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
-import ChatBubbleOutlineRoundedIcon from "@material-ui/icons/ChatBubbleOutlineRounded";
-
-/* Import for modal comment */
-
 //context
 import { withFirebase } from "./../../../config/Firebase/context";
 
@@ -17,7 +13,9 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
-import { Avatar, Box } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import Box from "@material-ui/core/Box";
+import SvgIcon from "@material-ui/core/SvgIcon";
 
 const CommentButton = ({ firebase, commentCount, postId, userName, userImage, displayedName }) => {
     const [open, setOpen] = useState(false);
@@ -53,7 +51,9 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage, di
         <>
             <div className="comment-button-container" onClick={handleOpen}>
                 <IconButton aria-label="like" size="small">
-                    <ChatBubbleOutlineRoundedIcon />
+                    <SvgIcon>
+                        <path d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z"></path>
+                    </SvgIcon>
                 </IconButton>
                 {commentCount > 0 ? (
                     <Typography variant="body1" component="span">
@@ -77,7 +77,7 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage, di
                 </DialogContent>
                 <DialogActions>
                     <Button className="submit-button" disabled={!replyText && true} onClick={handleComment}>
-                        Répondre
+                        Reply
                     </Button>
                 </DialogActions>
             </Dialog>

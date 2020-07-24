@@ -226,6 +226,11 @@ nav.nav-not-logged ul a {
 .post-info .post-actions {
     margin-top: 10px;
 }
+.post-info .post-actions .comment-button-container,
+.post-info .post-actions .like-button-container {
+    display: flex;
+    align-items: center;
+}
 
 .post-info .like-button-container {
     margin-left: 50px;
@@ -253,6 +258,14 @@ nav.nav-not-logged ul a {
 }
 .post-info .comment-button-container button:hover + span {
     color: rgb(var(--color-blue));
+}
+.post-info .post-actions svg {
+    width: 20px;
+    height: 20px;
+}
+.post-info .post-actions span.MuiTypography-root {
+    font-size: 14px;
+    margin-left: 5px;
 }
 
 /* .post-reply .post-username {

@@ -19,19 +19,20 @@ const DisplayReply = ({ firebase, postId }) => {
     dayjs.extend(relativeTime);
 
     useEffect(() => {
-        const getComments = async () => {
-            const result = await firebase.firestore.collection("comments").where("postId", "==", postId);
-
-            result.onSnapshot((querySnapshot) => {
+        const result = firebase.firestore
+            .collection("comments")
+            .where("postId", "==", postId)
+            .onSnapshot((querySnapshot) => {
                 const comments = [];
                 querySnapshot.forEach((doc) => {
                     comments.push(doc.data());
                 });
                 setComments(comments);
             });
-        };
 
-        getComments();
+        return () => {
+            result();
+        };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

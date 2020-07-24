@@ -31,18 +31,19 @@ const SinglePost = ({ firebase, postId, history }) => {
     } = state;
 
     useEffect(() => {
-        const getPost = async () => {
-            const result = await firebase.firestore.collection("posts").doc(postId);
-
-            result.onSnapshot((querySnapshot) => {
+        const result = firebase.firestore
+            .collection("posts")
+            .doc(postId)
+            .onSnapshot((querySnapshot) => {
                 if (!querySnapshot.exists) {
                     return history.push(ROUTES.HOME);
                 }
                 setPost(querySnapshot.data());
             });
-        };
 
-        getPost();
+        return () => {
+            result();
+        };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
