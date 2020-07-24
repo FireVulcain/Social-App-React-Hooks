@@ -32,27 +32,39 @@ const Posts = ({ firebase, userNamePosts }) => {
     dayjs.extend(relativeTime);
 
     useEffect(() => {
-        const getPosts = async () => {
-            let result;
-            if (userNamePosts) {
-                result = await firestore.collection("posts").where("userName", "==", userNamePosts).orderBy("createdAt", "desc");
-            } else {
-                result = await firestore.collection("posts").orderBy("createdAt", "desc");
-            }
-
-            result.onSnapshot((querySnapshot) => {
-                const posts = [];
-                querySnapshot.forEach((doc) => {
-                    let post = doc.data();
-                    post.id = doc.id;
-                    posts.push(post);
+        let result;
+        if (userNamePosts) {
+            result = firestore
+                .collection("posts")
+                .where("userName", "==", userNamePosts)
+                .orderBy("createdAt", "desc")
+                .onSnapshot((querySnapshot) => {
+                    const posts = [];
+                    querySnapshot.forEach((doc) => {
+                        let post = doc.data();
+                        post.id = doc.id;
+                        posts.push(post);
+                    });
+                    setPosts(posts);
                 });
-                setPosts(posts);
-            });
+        } else {
+            result = firestore
+                .collection("posts")
+                .orderBy("createdAt", "desc")
+                .onSnapshot((querySnapshot) => {
+                    const posts = [];
+                    querySnapshot.forEach((doc) => {
+                        let post = doc.data();
+                        post.id = doc.id;
+                        posts.push(post);
+                    });
+                    setPosts(posts);
+                });
+        }
+
+        return () => {
+            result();
         };
-
-        getPosts();
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userNamePosts]);
 
