@@ -65,7 +65,17 @@ const Banner = ({ firebase, userName, loggedUser, history }) => {
                         }}
                     ></div>
                     <div className="banner-info">
-                        <img src={user.userImage} alt={`${user.userName}`} />
+                        <div className="banner-profile-pic-container">
+                            <div
+                                style={{
+                                    backgroundImage: `url(${user.userImage})`,
+                                    backgroundPosition: "center",
+                                    backgroundSize: "cover",
+                                    backgroundRepeat: "no-repeat",
+                                }}
+                            ></div>
+                            <img src={user.userImage} alt={`${user.userName}`} />
+                        </div>
                         <Typography variant="body2" className="user-displayedName">
                             {user.displayedName}
                         </Typography>
