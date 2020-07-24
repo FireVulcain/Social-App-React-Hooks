@@ -421,6 +421,7 @@ nav.nav-not-logged ul a {
 }
 .banner-info img {
     width: 134px;
+    height: 134px;
     border: 4px solid rgb(var(--color-bg-dark));
     border-radius: 100%;
     -webkit-border-radius: 100%;
