@@ -88,7 +88,7 @@ const SinglePost = ({ firebase, postId, history }) => {
                         </Box>
                     </Box>
                     <Box>
-                        <DisplayReply postId={postId} />
+                        <DisplayReply postId={postId} commentCount={commentCount} />
                     </Box>
                 </>
             ) : (

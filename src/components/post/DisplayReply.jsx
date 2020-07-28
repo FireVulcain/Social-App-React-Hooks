@@ -6,6 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 //Component
 import { UserAvatar } from "./Post/UserAvatar";
 import { PostBody } from "./Post/PostBody";
+import { CommentMenuAction } from "./Comment/CommentMenuAction";
 
 //context
 import { withFirebase } from "../../config/Firebase/context";
@@ -14,7 +15,7 @@ import { withFirebase } from "../../config/Firebase/context";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-const DisplayReply = ({ firebase, postId }) => {
+const DisplayReply = ({ firebase, postId, commentCount }) => {
     const [comments, setComments] = useState([]);
     dayjs.extend(relativeTime);
 
@@ -25,7 +26,9 @@ const DisplayReply = ({ firebase, postId }) => {
             .onSnapshot((querySnapshot) => {
                 const comments = [];
                 querySnapshot.forEach((doc) => {
-                    comments.push(doc.data());
+                    let commentData = doc.data();
+                    commentData.commentId = doc.id;
+                    comments.push(commentData);
                 });
                 setComments(comments);
             });
@@ -40,9 +43,9 @@ const DisplayReply = ({ firebase, postId }) => {
     return (
         <>
             {comments
-                ? comments.map((comment, key) => {
+                ? comments.map((comment) => {
                       return (
-                          <Box width={1} display="flex" alignItems="flex-start" className="post-info post-reply" key={key}>
+                          <Box width={1} display="flex" alignItems="flex-start" className="post-info post-reply" key={comment.commentId}>
                               <UserAvatar userImage={comment.userImage} userName={comment.userName} />
                               <Box>
                                   <Box display="flex" alignItems="center">
@@ -57,6 +60,13 @@ const DisplayReply = ({ firebase, postId }) => {
                                       <Typography variant="body2" component="p" className="post-date">
                                           {dayjs(comment.createdAt).fromNow(true)}
                                       </Typography>
+
+                                      <CommentMenuAction
+                                          commentUsername={comment.userName}
+                                          postId={comment.postId}
+                                          commentId={comment.commentId}
+                                          commentCount={commentCount}
+                                      />
                                   </Box>
                                   <Typography variant="body2" component="p" className="post-reply-to">
                                       Replying to <Link to={`/user/${comment.userName}`}>@{comment.userName}</Link>
