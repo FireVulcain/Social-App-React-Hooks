@@ -99,6 +99,14 @@ const Banner = ({ firebase, userName, loggedUser, history }) => {
                                 <CalendarTodayIcon fontSize="small" /> Joined {dayjs(user.createdAt).format("MMMM YYYY")}
                             </Typography>
                         </Box>
+                        <Box display="flex" alignItems="center" mt={1}>
+                            <Typography variant="body2" className="user-following">
+                                <span>{user.following}</span> Following
+                            </Typography>
+                            <Typography variant="body2" className="user-followers">
+                                <span>{user.followers}</span> Followers
+                            </Typography>
+                        </Box>
                         {isUserProfile ? (
                             <>
                                 <Button onClick={() => setOpen(true)} variant="contained" className="edit-profile-button">

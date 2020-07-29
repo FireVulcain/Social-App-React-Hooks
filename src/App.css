@@ -487,6 +487,20 @@ nav.nav-not-logged ul a {
     text-decoration: underline;
 }
 
+.banner-info .user-following,
+.banner-info .user-followers {
+    color: rgb(var(--color-light-grey));
+    font-size: 15px;
+}
+.banner-info .user-following span,
+.banner-info .user-followers span {
+    color: rgb(var(--color-white));
+    font-weight: bold;
+}
+.banner-info .user-following {
+    margin-right: 20px;
+}
+
 .banner-info .edit-profile-button,
 .banner-info .follow-button,
 .banner-info .unfollow-button {

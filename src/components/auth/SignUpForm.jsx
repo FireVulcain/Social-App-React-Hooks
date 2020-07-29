@@ -60,6 +60,8 @@ const SignUpForm = ({ firebase }) => {
                 location: "",
                 userId,
                 website: "",
+                followers: 0,
+                following: 0,
             });
     };
 

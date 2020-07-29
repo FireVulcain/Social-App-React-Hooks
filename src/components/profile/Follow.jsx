@@ -40,6 +40,19 @@ export const Follow = ({ loggedUser, userName, firebase }) => {
                     listFollowing: firebase.FieldValue.arrayUnion(userName),
                 });
         }
+
+        await firebase.firestore
+            .collection("users")
+            .doc(loggedUser)
+            .update({
+                following: firebase.FieldValue.increment(1),
+            });
+        await firebase.firestore
+            .collection("users")
+            .doc(userName)
+            .update({
+                followers: firebase.FieldValue.increment(1),
+            });
     };
     const unFollowUser = async () => {
         setIsFollowing(false);
