@@ -20,6 +20,7 @@ import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import LinkIcon from "@material-ui/icons/Link";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import EditProfile from "./EditProfile";
+import { Follow } from "./Follow";
 
 const Banner = ({ firebase, userName, loggedUser, history }) => {
     const [user, setUser] = useState({});
@@ -105,7 +106,11 @@ const Banner = ({ firebase, userName, loggedUser, history }) => {
                                 </Button>
                                 <EditProfile open={open} handleClose={handleClose} user={user} firebase={firebase} />
                             </>
-                        ) : null}
+                        ) : (
+                            <>
+                                <Follow loggedUser={loggedUser} userName={userName} firebase={firebase} />
+                            </>
+                        )}
                     </div>
                 </div>
             )}

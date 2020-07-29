@@ -487,7 +487,9 @@ nav.nav-not-logged ul a {
     text-decoration: underline;
 }
 
-.banner-info .edit-profile-button {
+.banner-info .edit-profile-button,
+.banner-info .follow-button,
+.banner-info .unfollow-button {
     margin-top: 10px;
     background: transparent;
     border: 1px solid rgb(var(--color-green));
@@ -500,8 +502,17 @@ nav.nav-not-logged ul a {
     -ms-border-radius: 9999px;
     -o-border-radius: 9999px;
 }
-.banner-info .edit-profile-button:hover {
+.banner-info .edit-profile-button:hover,
+.banner-info .follow-button:hover {
     background: rgba(var(--color-green), 0.1);
+}
+.banner-info .unfollow-button {
+    color: rgb(var(--color-white));
+    background: rgb(var(--color-green));
+}
+.banner-info .unfollow-button:hover {
+    background: rgb(var(--color-light-red));
+    border: 1px solid rgb(var(--color-light-red));
 }
 
 .edit-profile .MuiPaper-root {

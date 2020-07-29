@@ -14,7 +14,7 @@ const User = (props) => {
     return (
         <div>
             <Banner userName={props.match.params.userName} loggedUser={state.user.credentials.userName} />
-            <Posts userNamePosts={props.match.params.userName} />
+            <Posts singleUserPosts={props.match.params.userName} />
         </div>
     );
 };

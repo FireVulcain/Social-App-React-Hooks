@@ -20,9 +20,9 @@ class Firebase {
         app.initializeApp(config);
 
         this.auth = app.auth();
-        // this.db = app.database();
         this.firestore = app.firestore();
         this.storage = app.storage();
+        this.FieldValue = app.firestore.FieldValue;
     }
 
     // *** Auth API ***

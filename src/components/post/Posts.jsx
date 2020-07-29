@@ -18,7 +18,7 @@ import { UserAvatar } from "./Post/UserAvatar";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-const Posts = ({ firebase, userNamePosts }) => {
+const Posts = ({ firebase, singleUserPosts }) => {
     const { state, setPosts } = useContext(GlobalContext);
     const { firestore } = firebase;
 
@@ -32,11 +32,10 @@ const Posts = ({ firebase, userNamePosts }) => {
     dayjs.extend(relativeTime);
 
     useEffect(() => {
-        let result;
-        if (userNamePosts) {
-            result = firestore
+        if (singleUserPosts) {
+            const result = firestore
                 .collection("posts")
-                .where("userName", "==", userNamePosts)
+                .where("userName", "==", singleUserPosts)
                 .orderBy("createdAt", "desc")
                 .onSnapshot((querySnapshot) => {
                     const posts = [];
@@ -47,26 +46,40 @@ const Posts = ({ firebase, userNamePosts }) => {
                     });
                     setPosts(posts);
                 });
-        } else {
-            result = firestore
-                .collection("posts")
-                .orderBy("createdAt", "desc")
-                .onSnapshot((querySnapshot) => {
-                    const posts = [];
-                    querySnapshot.forEach((doc) => {
-                        let post = doc.data();
-                        post.id = doc.id;
-                        posts.push(post);
+            return () => {
+                setPosts([]);
+                result();
+            };
+        } else if (userName) {
+            let listPostToDisplay = [userName];
+            const getPosts = async () => {
+                const followingRef = await firestore.collection("following").doc(userName).get();
+                listPostToDisplay = [...listPostToDisplay, ...followingRef.data().listFollowing];
+
+                const result = firestore
+                    .collection("posts")
+                    .where("userName", "in", listPostToDisplay)
+                    .orderBy("createdAt", "desc")
+                    .onSnapshot((querySnapshot) => {
+                        const posts = [];
+                        querySnapshot.forEach((doc) => {
+                            let post = doc.data();
+                            post.id = doc.id;
+                            posts.push(post);
+                        });
+                        setPosts(posts);
                     });
-                    setPosts(posts);
-                });
+                return () => {
+                    setPosts([]);
+                    result();
+                };
+            };
+
+            getPosts();
         }
 
-        return () => {
-            result();
-        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userNamePosts]);
+    }, [singleUserPosts, userName]);
 
     return (
         <>
