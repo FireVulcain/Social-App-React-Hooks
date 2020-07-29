@@ -54,7 +54,9 @@ const Posts = ({ firebase, singleUserPosts }) => {
             let listPostToDisplay = [userName];
             const getPosts = async () => {
                 const followingRef = await firestore.collection("following").doc(userName).get();
-                listPostToDisplay = [...listPostToDisplay, ...followingRef.data().listFollowing];
+                if (followingRef.exists) {
+                    listPostToDisplay = [...listPostToDisplay, ...followingRef.data().listFollowing];
+                }
 
                 const result = firestore
                     .collection("posts")

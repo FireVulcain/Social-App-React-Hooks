@@ -10,8 +10,9 @@ export const Follow = ({ loggedUser, userName, firebase }) => {
     useEffect(() => {
         const getFollowing = async () => {
             const followingRef = await firebase.firestore.collection("following").doc(loggedUser).get();
-
-            if (followingRef.data().listFollowing.includes(userName)) setIsFollowing(true);
+            if (followingRef.exists) {
+                if (followingRef.data().listFollowing.includes(userName)) setIsFollowing(true);
+            }
         };
 
         if (loggedUser && userName) {
@@ -21,12 +22,24 @@ export const Follow = ({ loggedUser, userName, firebase }) => {
 
     const followUser = async () => {
         setIsFollowing(true);
-        await firebase.firestore
-            .collection("following")
-            .doc(loggedUser)
-            .set({
-                listFollowing: [userName],
-            });
+
+        const userFollowDoc = await firebase.firestore.collection("following").doc(loggedUser).get();
+
+        if (userFollowDoc.exists) {
+            await firebase.firestore
+                .collection("following")
+                .doc(loggedUser)
+                .update({
+                    listFollowing: firebase.FieldValue.arrayUnion(userName),
+                });
+        } else {
+            await firebase.firestore
+                .collection("following")
+                .doc(loggedUser)
+                .set({
+                    listFollowing: firebase.FieldValue.arrayUnion(userName),
+                });
+        }
     };
     const unFollowUser = async () => {
         setIsFollowing(false);
