@@ -42,7 +42,7 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage, di
             postImg: [],
         });
 
-        await postRef.update({ commentCount: commentCount + 1 });
+        await postRef.update({ commentCount: firebase.FieldValue.increment(1) });
 
         handleClose();
     };

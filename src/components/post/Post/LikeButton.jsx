@@ -50,7 +50,7 @@ const LikeButton = ({ firebase, postId, userName, likeCount }) => {
             userName,
         });
 
-        await postRef.update({ likeCount: likeCount + 1 });
+        await postRef.update({ likeCount: firebase.FieldValue.increment(1) });
     };
 
     const handleUnlike = async (postId) => {
@@ -65,7 +65,7 @@ const LikeButton = ({ firebase, postId, userName, likeCount }) => {
 
         await firebase.firestore.collection("likes").doc(`${likeDocument.docs[0].id}`).delete();
 
-        await postRef.update({ likeCount: likeCount - 1 });
+        await postRef.update({ likeCount: firebase.FieldValue.increment(-1) });
     };
 
     return (

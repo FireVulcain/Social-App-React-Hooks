@@ -32,7 +32,7 @@ const DeleteComment = ({ firebase, commentId, postId, commentCount }) => {
         await firestore
             .collection("posts")
             .doc(postId)
-            .update({ commentCount: commentCount - 1 });
+            .update({ commentCount: firebase.FieldValue.increment(-1) });
     };
     return (
         <>
