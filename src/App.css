@@ -256,6 +256,19 @@ nav.nav-not-logged ul a {
     color: rgb(var(--color-white));
     text-decoration: none;
 }
+.twemoji {
+    width: 18px;
+    margin: 0 0.075em;
+}
+.post-info .post-body p {
+    white-space: pre-line;
+}
+.post-info .post-body a {
+    color: rgb(var(--color-green));
+}
+.post-info .post-body a:hover {
+    text-decoration: underline;
+}
 .post-info .post-global-link {
     position: absolute;
     top: 0;
@@ -265,8 +278,12 @@ nav.nav-not-logged ul a {
     display: block;
     z-index: 0;
 }
-.post-info .post-user-link {
+.post-info .post-user-link,
+.post-info .post-link {
     z-index: 90;
+}
+.post-info .post-link {
+    position: relative;
 }
 .post-info .post-toggle-menu {
     position: absolute;

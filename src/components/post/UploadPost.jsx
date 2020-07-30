@@ -30,7 +30,7 @@ const UploadPost = ({ firebase }) => {
     } = state;
 
     const [postText, setPostText] = useState("");
-    const [selectionStart, setSelectionStart] = useState(null);
+    const [selectionStart, setSelectionStart] = useState(0);
     const [uploadedImg, setUploadedImg] = useState([]);
     const [uploadLoading, setUploadLoading] = useState(false);
     const [tooManyFiles, setTooManyFiles] = useState(false);
@@ -129,6 +129,16 @@ const UploadPost = ({ firebase }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chosenEmoji]);
 
+    const handleChange = (e) => {
+        setPostText(e.target.value);
+        setSelectionStart(e.target.selectionStart);
+    };
+
+    const handleKeyUp = (e) => {
+        if (e.which === 37 || e.which === 38 || e.which === 39 || e.which === 40) {
+            setSelectionStart(e.target.selectionStart);
+        }
+    };
     return (
         <>
             <Snackbar open={tooManyFiles} autoHideDuration={6000} onClose={handleCloseSnackBar}>
@@ -145,10 +155,9 @@ const UploadPost = ({ firebase }) => {
                         <TextField
                             type="text"
                             placeholder="Post a message"
-                            onChange={(e) => setPostText(e.target.value)}
-                            onClick={(e) => {
-                                setSelectionStart(e.target.selectionStart);
-                            }}
+                            onChange={(e) => handleChange(e)}
+                            onKeyUp={(e) => handleKeyUp(e)}
+                            onClick={(e) => setSelectionStart(e.target.selectionStart)}
                             value={postText}
                             multiline
                             className="text-field"

@@ -1,5 +1,6 @@
 import React from "react";
-import Picker from "emoji-picker-react";
+import "emoji-mart/css/emoji-mart.css";
+import { Picker } from "emoji-mart";
 
 /* Material UI */
 import Popover from "@material-ui/core/Popover";
@@ -9,8 +10,8 @@ import IconButton from "@material-ui/core/IconButton";
 import SentimentSatisfiedOutlinedIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
 
 const EmojiPicker = ({ setChosenEmoji }) => {
-    const onEmojiClick = (event, emojiObject) => {
-        setChosenEmoji(emojiObject.emoji);
+    const onEmojiClick = (emojiObject) => {
+        setChosenEmoji(emojiObject.native);
     };
 
     // POPOVER
@@ -43,10 +44,10 @@ const EmojiPicker = ({ setChosenEmoji }) => {
                 }}
                 transformOrigin={{
                     vertical: "top",
-                    horizontal: "center",
+                    horizontal: "left",
                 }}
             >
-                <Picker onEmojiClick={onEmojiClick} disableAutoFocus={true} />
+                <Picker set="twitter" onSelect={onEmojiClick} theme="dark" title="" emoji="" />
             </Popover>
         </>
     );
