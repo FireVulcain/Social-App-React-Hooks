@@ -9,6 +9,7 @@ import { GlobalContext } from "../../config/GlobalState/GlobalState";
 
 /* Components */
 import SignOutButton from "../auth/SignOut";
+import Search from "./Search";
 
 /* Material UI */
 import IconButton from "@material-ui/core/IconButton";
@@ -37,6 +38,9 @@ export const NavigationAuth = () => {
                 </li>
                 <li>
                     <SignOutButton />
+                </li>
+                <li>
+                    <Search />
                 </li>
             </ul>
         </nav>

@@ -96,6 +96,7 @@ const EditProfile = ({ firebase, open, handleClose, user }) => {
             userPosts.forEach((doc) => {
                 doc.ref.update({
                     displayedName: profileName,
+                    displayedName_lowercase: profileName.toLowerCase(),
                 });
             });
 
@@ -103,6 +104,7 @@ const EditProfile = ({ firebase, open, handleClose, user }) => {
             userComents.forEach((doc) => {
                 doc.ref.update({
                     displayedName: profileName,
+                    displayedName_lowercase: profileName.toLowerCase(),
                 });
             });
         }
@@ -111,6 +113,7 @@ const EditProfile = ({ firebase, open, handleClose, user }) => {
         await firebase.firestore.collection("users").doc(user.userName).update({
             bio: bio,
             displayedName: profileName,
+            displayedName_lowercase: profileName.toLowerCase(),
             location: location,
             website: website,
             userImage: uploadProfilePicURL,

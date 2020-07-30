@@ -46,6 +46,7 @@ const SignUpForm = ({ firebase }) => {
     };
 
     const uploadUser = async (email, userName, userId) => {
+        let userName_lowercase = userName.toLowerCase();
         return await firebase.firestore
             .collection("users")
             .doc(userName)
@@ -54,7 +55,9 @@ const SignUpForm = ({ firebase }) => {
                 createdAt: new Date().toISOString(),
                 email,
                 userName,
+                userName_lowercase,
                 displayedName: userName,
+                displayedName_lowercase: userName_lowercase,
                 userImage: `https://firebasestorage.googleapis.com/v0/b/${process.env.REACT_APP_STORAGE_BUCKET}/o/no-img.png?alt=media`,
                 userBanner: "",
                 location: "",
