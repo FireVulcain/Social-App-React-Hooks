@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 //context
@@ -17,6 +17,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 /* Material UI Icons */
 import CropOriginalOutlinedIcon from "@material-ui/icons/CropOriginalOutlined";
 import CancelIcon from "@material-ui/icons/Cancel";
+import EmojiPicker from "./EmojiPicker";
 
 const UploadPost = ({ firebase }) => {
     const { state } = useContext(GlobalContext);
@@ -29,9 +30,12 @@ const UploadPost = ({ firebase }) => {
     } = state;
 
     const [postText, setPostText] = useState("");
+    const [selectionStart, setSelectionStart] = useState(null);
     const [uploadedImg, setUploadedImg] = useState([]);
     const [uploadLoading, setUploadLoading] = useState(false);
     const [tooManyFiles, setTooManyFiles] = useState(false);
+
+    const [chosenEmoji, setChosenEmoji] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -66,7 +70,6 @@ const UploadPost = ({ firebase }) => {
                 console.log.log(err);
             });
     };
-
     const handleUploadFile = (e) => {
         let files = e.target.files;
         let imgFile = [];
@@ -79,7 +82,6 @@ const UploadPost = ({ firebase }) => {
 
         setUploadedImg((prevState) => [...prevState, ...imgFile]);
     };
-
     const removeUploadedFile = (path) => {
         const uploadedImgCopy = [...uploadedImg];
         const index = uploadedImgCopy.indexOf(path);
@@ -87,7 +89,6 @@ const UploadPost = ({ firebase }) => {
 
         return setUploadedImg(uploadedImgCopy);
     };
-
     const uploadPost = async (postImg) => {
         await firestore.collection("posts").doc().set({
             body: postText,
@@ -100,7 +101,6 @@ const UploadPost = ({ firebase }) => {
             postImg,
         });
     };
-
     const handleCloseSnackBar = (event, reason) => {
         if (reason === "clickaway") {
             return;
@@ -108,10 +108,26 @@ const UploadPost = ({ firebase }) => {
 
         setTooManyFiles(false);
     };
-
     const Alert = (props) => {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
     };
+
+    useEffect(() => {
+        if (chosenEmoji) {
+            let startPosition = postText.substring(0, selectionStart);
+            let endPosition = postText.substring(selectionStart);
+
+            if (startPosition !== endPosition) {
+                setPostText(startPosition + chosenEmoji + endPosition);
+            } else {
+                setPostText(startPosition + chosenEmoji);
+            }
+
+            setChosenEmoji(null);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [chosenEmoji]);
 
     return (
         <>
@@ -130,6 +146,9 @@ const UploadPost = ({ firebase }) => {
                             type="text"
                             placeholder="Post a message"
                             onChange={(e) => setPostText(e.target.value)}
+                            onClick={(e) => {
+                                setSelectionStart(e.target.selectionStart);
+                            }}
                             value={postText}
                             multiline
                             className="text-field"
@@ -154,19 +173,23 @@ const UploadPost = ({ firebase }) => {
                             </div>
                         ) : null}
                         <Box display="flex" alignItems="center" justifyContent="space-between">
-                            <input
-                                accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"
-                                hidden
-                                id="icon-button-file"
-                                multiple
-                                type="file"
-                                onChange={handleUploadFile}
-                            />
-                            <label htmlFor="icon-button-file">
-                                <IconButton className="upload-img" aria-label="upload image" component="span">
-                                    <CropOriginalOutlinedIcon />
-                                </IconButton>
-                            </label>
+                            <Box display="flex" alignItems="center" justifyContent="space-between">
+                                <input
+                                    accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"
+                                    hidden
+                                    id="icon-button-file"
+                                    multiple
+                                    type="file"
+                                    onChange={handleUploadFile}
+                                />
+                                <label htmlFor="icon-button-file">
+                                    <IconButton className="upload-img" aria-label="upload image" component="span">
+                                        <CropOriginalOutlinedIcon />
+                                    </IconButton>
+                                </label>
+
+                                <EmojiPicker setChosenEmoji={setChosenEmoji} />
+                            </Box>
                             <Button
                                 disabled={postText === "" && uploadedImg.length === 0}
                                 type="submit"
