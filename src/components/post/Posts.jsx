@@ -52,13 +52,15 @@ const Posts = ({ firebase, singleUserPosts }) => {
             };
         } else if (userName) {
             let listPostToDisplay = [userName];
+            let result;
+
             const getPosts = async () => {
                 const followingRef = await firestore.collection("following").doc(userName).get();
                 if (followingRef.exists) {
                     listPostToDisplay = [...listPostToDisplay, ...followingRef.data().listFollowing];
                 }
 
-                const result = firestore
+                result = firestore
                     .collection("posts")
                     .where("userName", "in", listPostToDisplay)
                     .orderBy("createdAt", "desc")
@@ -71,18 +73,20 @@ const Posts = ({ firebase, singleUserPosts }) => {
                         });
                         setPosts(posts);
                     });
-                return () => {
-                    setPosts([]);
-                    result();
-                };
             };
 
             getPosts();
+
+            return () => {
+                setPosts([]);
+                if (typeof result === "function") {
+                    result();
+                }
+            };
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [singleUserPosts, userName]);
-
     return (
         <>
             {posts.map((post) => {

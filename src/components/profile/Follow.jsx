@@ -18,6 +18,10 @@ export const Follow = ({ loggedUser, userName, firebase }) => {
         if (loggedUser && userName) {
             getFollowing();
         }
+
+        return () => {
+            setIsFollowing(false);
+        };
     }, [loggedUser, userName, firebase.firestore]);
 
     const followUser = async () => {

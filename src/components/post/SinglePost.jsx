@@ -26,7 +26,7 @@ const SinglePost = ({ firebase, postId, history }) => {
     const { state, setPost } = useContext(GlobalContext);
     const {
         data: {
-            post: { likeCount, commentCount, postImg, createdAt, userName, displayedName, body, userImage },
+            post: { likeCount, commentCount, postImg, createdAt, userName, displayedName, body, userImage, gif },
         },
     } = state;
 
@@ -68,7 +68,7 @@ const SinglePost = ({ firebase, postId, history }) => {
                         </Box>
                         <Box width={1} mt={2}>
                             <Box>
-                                <PostBody body={body} postImg={postImg} />
+                                <PostBody body={body} postImg={postImg} gif={gif} />
                             </Box>
                             <Box>
                                 <Typography variant="body2" component="p" className="post-date">
