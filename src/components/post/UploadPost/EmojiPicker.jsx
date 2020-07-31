@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 
@@ -15,7 +15,7 @@ const EmojiPicker = ({ setChosenEmoji }) => {
     };
 
     // POPOVER
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -26,7 +26,7 @@ const EmojiPicker = ({ setChosenEmoji }) => {
     };
 
     const open = Boolean(anchorEl);
-    const id = open ? "simple-popover" : undefined;
+    const id = open ? "add-emoji" : undefined;
 
     return (
         <>

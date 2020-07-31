@@ -1,6 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+/* Components */
+import { ImagesUpload } from "./UploadPost/ImagesUpload";
+import { ImagePreview } from "./UploadPost/ImagePreview";
+import EmojiPicker from "./UploadPost/EmojiPicker";
+import GifPicker from "./UploadPost/GifPicker";
+import { GifPreview } from "./UploadPost/GifPreview";
+
 //context
 import { withFirebase } from "../../config/Firebase/context";
 import { GlobalContext } from "../../config/GlobalState/GlobalState";
@@ -10,14 +17,7 @@ import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
-
-/* Material UI Icons */
-import CropOriginalOutlinedIcon from "@material-ui/icons/CropOriginalOutlined";
-import CancelIcon from "@material-ui/icons/Cancel";
-import EmojiPicker from "./EmojiPicker";
+import { SnackBarAlert } from "./UploadPost/SnackBarAlert";
 
 const UploadPost = ({ firebase }) => {
     const { state } = useContext(GlobalContext);
@@ -37,10 +37,12 @@ const UploadPost = ({ firebase }) => {
 
     const [chosenEmoji, setChosenEmoji] = useState(null);
 
+    const [chosenGif, setChosenGif] = useState(null);
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (postText === "" && uploadedImg.length === 0) return;
+        if (postText === "" && uploadedImg.length === 0 && chosenGif === null) return;
 
         setUploadLoading(true);
 
@@ -64,6 +66,8 @@ const UploadPost = ({ firebase }) => {
                 setPostText("");
                 setUploadedImg([]);
                 setUploadLoading(false);
+                setChosenEmoji(null);
+                setChosenGif(null);
             })
             .catch((err) => {
                 setUploadLoading(false);
@@ -82,13 +86,7 @@ const UploadPost = ({ firebase }) => {
 
         setUploadedImg((prevState) => [...prevState, ...imgFile]);
     };
-    const removeUploadedFile = (path) => {
-        const uploadedImgCopy = [...uploadedImg];
-        const index = uploadedImgCopy.indexOf(path);
-        if (index > -1) uploadedImgCopy.splice(index, 1);
 
-        return setUploadedImg(uploadedImgCopy);
-    };
     const uploadPost = async (postImg) => {
         await firestore.collection("posts").doc().set({
             body: postText,
@@ -99,17 +97,8 @@ const UploadPost = ({ firebase }) => {
             userName: userName,
             displayedName: displayedName,
             postImg,
+            gif: chosenGif,
         });
-    };
-    const handleCloseSnackBar = (event, reason) => {
-        if (reason === "clickaway") {
-            return;
-        }
-
-        setTooManyFiles(false);
-    };
-    const Alert = (props) => {
-        return <MuiAlert elevation={6} variant="filled" {...props} />;
     };
 
     useEffect(() => {
@@ -141,11 +130,7 @@ const UploadPost = ({ firebase }) => {
     };
     return (
         <>
-            <Snackbar open={tooManyFiles} autoHideDuration={6000} onClose={handleCloseSnackBar}>
-                <Alert onClose={handleCloseSnackBar} severity="error">
-                    No more than 4 photos
-                </Alert>
-            </Snackbar>
+            <SnackBarAlert tooManyFiles={tooManyFiles} setTooManyFiles={setTooManyFiles} />
             <form onSubmit={handleSubmit} className={"upload-post" + (uploadLoading ? " upload-post-loading" : "")}>
                 <Box display="flex" alignItems="flex-start">
                     <Box mr={2}>
@@ -162,45 +147,18 @@ const UploadPost = ({ firebase }) => {
                             multiline
                             className="text-field"
                         />
-                        {uploadedImg ? (
-                            <div className="preview-img-container">
-                                {uploadedImg.map((path, key) => {
-                                    return (
-                                        <div className="preview-img" key={key} style={{ backgroundImage: `url(${URL.createObjectURL(path)})` }}>
-                                            <IconButton
-                                                className="delete-img-post"
-                                                onClick={() => removeUploadedFile(path)}
-                                                aria-label="delete picture"
-                                                component="button"
-                                            >
-                                                <CancelIcon />
-                                            </IconButton>
-                                            <img src={URL.createObjectURL(path)} alt="" />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        ) : null}
+
+                        {uploadedImg ? <ImagePreview uploadedImg={uploadedImg} setUploadedImg={setUploadedImg} /> : null}
+                        {chosenGif ? <GifPreview setChosenGif={setChosenGif} chosenGif={chosenGif} /> : null}
+
                         <Box display="flex" alignItems="center" justifyContent="space-between">
                             <Box display="flex" alignItems="center" justifyContent="space-between">
-                                <input
-                                    accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"
-                                    hidden
-                                    id="icon-button-file"
-                                    multiple
-                                    type="file"
-                                    onChange={handleUploadFile}
-                                />
-                                <label htmlFor="icon-button-file">
-                                    <IconButton className="upload-img" aria-label="upload image" component="span">
-                                        <CropOriginalOutlinedIcon />
-                                    </IconButton>
-                                </label>
-
+                                <ImagesUpload chosenGif={chosenGif} handleUploadFile={handleUploadFile} />
                                 <EmojiPicker setChosenEmoji={setChosenEmoji} />
+                                <GifPicker uploadedImg={uploadedImg} setChosenGif={setChosenGif} />
                             </Box>
                             <Button
-                                disabled={postText === "" && uploadedImg.length === 0}
+                                disabled={postText === "" && uploadedImg.length === 0 && chosenGif === null}
                                 type="submit"
                                 variant="contained"
                                 className="submit-button"

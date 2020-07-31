@@ -105,7 +105,7 @@ const Posts = ({ firebase, singleUserPosts }) => {
                                 </Typography>
                                 <PostMenuAction postUsername={post.userName} postId={post.id} />
                             </Box>
-                            <PostBody body={post.body} postImg={post.postImg} />
+                            <PostBody body={post.body} postImg={post.postImg} gif={post.gif} />
                             <Box display="flex" alignItems="center" className="post-actions">
                                 <CommentButton
                                     displayedName={post.displayedName}

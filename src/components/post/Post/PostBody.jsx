@@ -1,6 +1,8 @@
 import React from "react";
 import ModalImage from "react-modal-image";
 
+import { Gif } from "@giphy/react-components";
+
 import Twemoji from "react-twemoji";
 import Linkify from "react-linkify";
 
@@ -8,7 +10,7 @@ import Linkify from "react-linkify";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-export const PostBody = ({ body, postImg }) => {
+export const PostBody = ({ body, postImg, gif }) => {
     const componentDecorator = (href, text, key) => (
         <a href={href} key={key} target="_blank" rel="noopener noreferrer" className="post-link">
             {text}
@@ -17,11 +19,13 @@ export const PostBody = ({ body, postImg }) => {
 
     return (
         <Box className="post-body">
-            <Linkify componentDecorator={componentDecorator}>
-                <Twemoji options={{ className: "twemoji" }} noWrapper={true}>
-                    <Typography variant="body1">{body}</Typography>
-                </Twemoji>
-            </Linkify>
+            {body ? (
+                <Linkify componentDecorator={componentDecorator}>
+                    <Twemoji options={{ className: "twemoji" }} noWrapper={true}>
+                        <Typography variant="body1">{body}</Typography>
+                    </Twemoji>
+                </Linkify>
+            ) : null}
 
             {postImg.length > 0 ? (
                 <div className="post-img-container">
@@ -33,6 +37,16 @@ export const PostBody = ({ body, postImg }) => {
                         );
                     })}
                 </div>
+            ) : null}
+            {gif ? (
+                <Gif
+                    gif={gif}
+                    width={500}
+                    onGifClick={(gif, e) => {
+                        e.preventDefault();
+                        window.open(gif.url, "_blank");
+                    }}
+                />
             ) : null}
         </Box>
     );

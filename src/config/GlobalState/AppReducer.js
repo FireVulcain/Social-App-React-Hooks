@@ -40,7 +40,7 @@ export default (state, action) => {
                     likes: [],
                 },
             };
-        case "LIKE_SCREAM":
+        case "LIKE_POST":
             return {
                 ...state,
                 user: {

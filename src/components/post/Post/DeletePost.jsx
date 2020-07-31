@@ -24,7 +24,7 @@ const DeletePost = ({ firebase, postId }) => {
     const handleClose = () => {
         setOpen(false);
     };
-    const deleteScream = async () => {
+    const deletePost = async () => {
         // Delete IMGs
         const getImgs = await firestore.collection("posts").doc(postId).get();
         getImgs.data().postImg.map((img) => {
@@ -64,7 +64,7 @@ const DeletePost = ({ firebase, postId }) => {
                     <Button onClick={handleClose} className="btn cancel">
                         cancel
                     </Button>
-                    <Button onClick={deleteScream} className="btn delete">
+                    <Button onClick={deletePost} className="btn delete">
                         Delete
                     </Button>
                 </DialogActions>

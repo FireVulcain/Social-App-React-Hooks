@@ -68,7 +68,7 @@ const GlobalProvider = ({ firebase, children }) => {
 
     const setLikes = (likes) => {
         dispatch({
-            type: "LIKE_SCREAM",
+            type: "LIKE_POST",
             payload: likes,
         });
     };

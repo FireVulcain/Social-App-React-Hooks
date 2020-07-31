@@ -24,7 +24,7 @@ const DeleteComment = ({ firebase, commentId, postId, commentCount }) => {
     const handleClose = () => {
         setOpen(false);
     };
-    const deleteScream = async () => {
+    const deletePost = async () => {
         // Delete comment
         await firestore.collection("comments").doc(commentId).delete();
 
@@ -51,7 +51,7 @@ const DeleteComment = ({ firebase, commentId, postId, commentCount }) => {
                     <Button onClick={handleClose} className="btn cancel">
                         cancel
                     </Button>
-                    <Button onClick={deleteScream} className="btn delete">
+                    <Button onClick={deletePost} className="btn delete">
                         Delete
                     </Button>
                 </DialogActions>
