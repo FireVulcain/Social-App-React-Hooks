@@ -106,10 +106,16 @@ const UploadPost = ({ firebase }) => {
             let startPosition = postText.substring(0, selectionStart);
             let endPosition = postText.substring(selectionStart);
 
-            if (startPosition !== endPosition) {
-                setPostText(startPosition + chosenEmoji + endPosition);
+            if (!selectionStart) {
+                setPostText(startPosition + endPosition + chosenEmoji);
             } else {
-                setPostText(startPosition + chosenEmoji);
+                if (startPosition !== endPosition) {
+                    // setPostText(startPosition + chosenEmoji + endPosition);
+
+                    setPostText(startPosition + endPosition + chosenEmoji);
+                } else {
+                    setPostText(startPosition + chosenEmoji);
+                }
             }
 
             setChosenEmoji(null);

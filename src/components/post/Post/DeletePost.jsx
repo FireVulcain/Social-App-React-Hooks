@@ -27,22 +27,28 @@ const DeletePost = ({ firebase, postId }) => {
     const deletePost = async () => {
         // Delete IMGs
         const getImgs = await firestore.collection("posts").doc(postId).get();
-        getImgs.data().postImg.map((img) => {
-            const storageImg = firebase.storage.refFromURL(img);
-            return storageImg.delete();
-        });
+        if (getImgs.exists) {
+            getImgs.data().postImg.map((img) => {
+                const storageImg = firebase.storage.refFromURL(img);
+                return storageImg.delete();
+            });
+        }
 
         // Delete Likes
         const getLikes = await firestore.collection("likes").where("postId", "==", postId).get();
-        getLikes.forEach(function (doc) {
-            doc.ref.delete();
-        });
+        if (getLikes.exists) {
+            getLikes.forEach(function (doc) {
+                doc.ref.delete();
+            });
+        }
 
         // Delete Comments
         const getComments = await firestore.collection("comments").where("postId", "==", postId).get();
-        getComments.forEach(function (doc) {
-            doc.ref.delete();
-        });
+        if (getComments.exists) {
+            getComments.forEach(function (doc) {
+                doc.ref.delete();
+            });
+        }
 
         // Delete post
         await firestore.collection("posts").doc(postId).delete();
