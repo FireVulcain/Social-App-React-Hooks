@@ -14,7 +14,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 // Icons
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 
-const DeleteComment = ({ firebase, commentId, postId, commentCount }) => {
+const DeleteComment = ({ firebase, commentId, postId }) => {
     const [open, setOpen] = useState(false);
     const { firestore } = firebase;
 
@@ -33,6 +33,8 @@ const DeleteComment = ({ firebase, commentId, postId, commentCount }) => {
             .collection("posts")
             .doc(postId)
             .update({ commentCount: firebase.FieldValue.increment(-1) });
+
+        await firebase.firestore.collection("notifications").doc(commentId).delete();
     };
     return (
         <>

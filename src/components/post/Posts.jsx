@@ -25,7 +25,7 @@ const Posts = ({ firebase, singleUserPosts }) => {
     const {
         data: { posts },
         user: {
-            credentials: { userName },
+            credentials: { userName, userImage, displayedName },
         },
     } = state;
 
@@ -112,11 +112,11 @@ const Posts = ({ firebase, singleUserPosts }) => {
                             <PostBody body={post.body} postImg={post.postImg} gif={post.gif} />
                             <Box display="flex" alignItems="center" className="post-actions">
                                 <CommentButton
-                                    displayedName={post.displayedName}
+                                    displayedName={displayedName}
                                     commentCount={post.commentCount}
                                     postId={post.id}
                                     userName={userName}
-                                    userImage={post.userImage}
+                                    userImage={userImage}
                                 />
                                 <LikeButton postId={post.id} userName={userName} likeCount={post.likeCount} />
                             </Box>

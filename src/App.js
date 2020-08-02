@@ -9,6 +9,7 @@ import User from "./views/User";
 import Navigation from "./components/layouts/Navigation";
 import { SignUp } from "./views/SignUp";
 import SignIn from "./views/SignIn";
+import Notifications from "./views/Notifications";
 
 /* context */
 import GlobalProvider from "./config/GlobalState/GlobalState";
@@ -32,6 +33,7 @@ const App = () => {
                         <Route exact path={ROUTES.SIGN_IN} component={SignIn} />
                         <Route exact path={ROUTES.USER} component={User} />
                         <Route exact path={ROUTES.POST} component={Post} />
+                        <Route exact path={ROUTES.NOTIFICATIONS} component={Notifications} />
                         <Route render={() => <Redirect to="/" />} />
                     </Switch>
                 </Container>

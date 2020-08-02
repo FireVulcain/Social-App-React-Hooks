@@ -45,16 +45,35 @@ const LikeButton = ({ firebase, postId, userName, likeCount }) => {
     const handleLike = async (postId) => {
         const postRef = firebase.firestore.collection("posts").doc(postId);
 
-        await firebase.firestore.collection("likes").add({
+        const getPost = await postRef.get();
+        const getPostUserName = getPost.data().userName;
+
+        const querySnapshot = await firebase.firestore.collection("likes").add({
             postId,
             userName,
         });
 
+        const likeId = querySnapshot.id;
+
         await postRef.update({ likeCount: firebase.FieldValue.increment(1) });
+
+        if (userName !== getPostUserName) {
+            await firebase.firestore.collection("notifications").doc(likeId).set({
+                createdAt: new Date().toISOString(),
+                postId,
+                read: false,
+                recipient: getPostUserName,
+                sender: userName,
+                type: "like",
+            });
+        }
     };
 
     const handleUnlike = async (postId) => {
         const postRef = firebase.firestore.collection("posts").doc(postId);
+
+        const getPost = await postRef.get();
+        const getPostUserName = getPost.data().userName;
 
         const likeDocument = await firebase.firestore
             .collection("likes")
@@ -62,10 +81,15 @@ const LikeButton = ({ firebase, postId, userName, likeCount }) => {
             .where("postId", "==", postId)
             .limit(1)
             .get();
+        const likeId = likeDocument.docs[0].id;
 
-        await firebase.firestore.collection("likes").doc(`${likeDocument.docs[0].id}`).delete();
+        await firebase.firestore.collection("likes").doc(`${likeId}`).delete();
 
         await postRef.update({ likeCount: firebase.FieldValue.increment(-1) });
+
+        if (userName !== getPostUserName) {
+            await firebase.firestore.collection("notifications").doc(likeId).delete();
+        }
     };
 
     return (

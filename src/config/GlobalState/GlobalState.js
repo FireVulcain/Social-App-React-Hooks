@@ -11,6 +11,7 @@ const initialState = {
         authenticated: false,
         credentials: {},
         likes: [],
+        notifications: [],
         loading: true,
     },
     ui: {
@@ -27,11 +28,35 @@ const GlobalProvider = ({ firebase, children }) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
     useEffect(() => {
-        let listener = firebase.auth.onAuthStateChanged(function (user) {
+        firebase.auth.onAuthStateChanged(function (user) {
             if (user) {
                 const getUser = async (userId) => {
                     const result = await firebase.firestore.collection("users").where("userId", "==", userId).get();
-                    result.forEach((user) => {
+                    result.forEach(async (user) => {
+                        await firebase.firestore
+                            .collection("notifications")
+                            .where("recipient", "==", user.data().userName)
+                            .orderBy("createdAt", "desc")
+                            .onSnapshot((querySnapshot) => {
+                                if (querySnapshot.empty) {
+                                    dispatch({
+                                        type: "SET_NOTIFICATION",
+                                        payload: null,
+                                    });
+                                } else {
+                                    let notifsList = [];
+                                    querySnapshot.forEach((notification) => {
+                                        let notif = notification.data();
+                                        notif.id = notification.id;
+                                        notifsList.push(notif);
+                                    });
+                                    dispatch({
+                                        type: "SET_NOTIFICATION",
+                                        payload: notifsList,
+                                    });
+                                }
+                            });
+
                         dispatch({
                             type: "SET_USER",
                             payload: user.data(),
@@ -45,10 +70,6 @@ const GlobalProvider = ({ firebase, children }) => {
                 });
             }
         });
-
-        return () => {
-            listener();
-        };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

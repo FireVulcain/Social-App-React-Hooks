@@ -43,9 +43,12 @@ nav ul {
     padding: 10px 0;
 }
 nav ul svg.MuiSvgIcon-root {
-    fill: white;
+    fill: rgb(var(--color-white));
     width: 30px;
     height: 30px;
+}
+nav ul .active-menu svg.MuiSvgIcon-root {
+    fill: rgb(var(--color-green));
 }
 
 nav ul .MuiIconButton-colorPrimary:hover {
@@ -777,4 +780,74 @@ nav.nav-not-logged ul a {
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
+}
+
+/* Notifications */
+
+.notification-badge > span {
+    color: #fff;
+    background-color: rgb(var(--color-green));
+}
+.notifications-container h1 {
+    color: rgb(var(--color-white));
+    font-size: 20px;
+    font-weight: bold;
+}
+.notifications-container .notification-item {
+    position: relative;
+    padding: 30px;
+    border: 1px solid rgb(var(--border-blue));
+}
+.notifications-container .notification-item.notification-not-read {
+    background-color: rgba(var(--color-green), 0.12);
+}
+.notifications-container .notification-item:first-of-type {
+    margin-top: 15px;
+    border-bottom: 0;
+}
+.notifications-container .notification-item .avatar,
+.notifications-container .notification-item svg {
+    width: 30px;
+    height: 30px;
+}
+.notifications-container .notification-item svg {
+    margin-right: 20px;
+    fill: rgb(var(--color-light-red));
+}
+.notifications-container .notification-item svg.comment-icon {
+    fill: rgb(var(--color-blue));
+}
+
+.notifications-container .notification-item .notification-global-link {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    z-index: 0;
+}
+.notifications-container .notification-item .notification-user-link {
+    z-index: 90;
+}
+.notifications-container .notification-item .notification-userName {
+    position: relative;
+}
+.notifications-container .notification-item .notifciation-user-infos {
+    font-size: 15px;
+    margin-top: 10px;
+    color: rgb(var(--color-white));
+}
+.notifications-container .notification-item .notifciation-user-infos a {
+    color: rgb(var(--color-white));
+    font-weight: bold;
+    text-decoration: none;
+}
+.notifications-container .notification-item .notifciation-user-infos a:hover {
+    text-decoration: underline;
+}
+.notifications-container .no-notificiations {
+    margin-top: 30px;
+    text-align: center;
+    color: rgb(var(--color-white));
 }

@@ -32,7 +32,10 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage, di
     const handleComment = async () => {
         const postRef = firebase.firestore.collection("posts").doc(postId);
 
-        await firebase.firestore.collection("comments").doc().set({
+        const getPost = await postRef.get();
+        const getPostUserName = getPost.data().userName;
+
+        const querySnapshot = await firebase.firestore.collection("comments").add({
             body: replyText,
             createdAt: new Date().toISOString(),
             postId,
@@ -42,7 +45,20 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage, di
             postImg: [],
         });
 
+        const commentId = querySnapshot.id;
+
         await postRef.update({ commentCount: firebase.FieldValue.increment(1) });
+
+        if (userName !== getPostUserName) {
+            await firebase.firestore.collection("notifications").doc(commentId).set({
+                createdAt: new Date().toISOString(),
+                postId,
+                read: false,
+                recipient: getPostUserName,
+                sender: userName,
+                type: "comment",
+            });
+        }
 
         handleClose();
     };

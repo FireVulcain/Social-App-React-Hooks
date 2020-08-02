@@ -27,16 +27,25 @@ export default (state, action) => {
                     loading: false,
                 },
             };
+        case "SET_NOTIFICATION":
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    notifications: action.payload,
+                },
+            };
         case "LOGOUT_USER":
             return {
                 ...state,
                 data: {
                     posts: [],
-                    post: {},
+                    post: { ...state.data.post },
                 },
                 user: {
                     authenticated: false,
                     credentials: {},
+                    notifications: [],
                     likes: [],
                 },
             };

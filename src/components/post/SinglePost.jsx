@@ -75,20 +75,22 @@ const SinglePost = ({ firebase, postId, history }) => {
                                     {dayjs(createdAt).format("H:mm A")} · {dayjs(createdAt).format("MMMM DD, YYYY")}
                                 </Typography>
                             </Box>
-                            <Box display="flex" alignItems="center" className="post-actions">
-                                <CommentButton
-                                    displayedName={displayedName}
-                                    commentCount={commentCount}
-                                    postId={postId}
-                                    userName={userName}
-                                    userImage={userImage}
-                                />
-                                <LikeButton postId={postId} userName={userName} likeCount={likeCount} />
-                            </Box>
+                            {state.user.authenticated ? (
+                                <Box display="flex" alignItems="center" className="post-actions">
+                                    <CommentButton
+                                        displayedName={state.user.credentials.displayedName}
+                                        commentCount={commentCount}
+                                        postId={postId}
+                                        userName={state.user.credentials.userName}
+                                        userImage={state.user.credentials.userImage}
+                                    />
+                                    <LikeButton postId={postId} userName={state.user.credentials.userName} likeCount={likeCount} />
+                                </Box>
+                            ) : null}
                         </Box>
                     </Box>
                     <Box>
-                        <DisplayReply postId={postId} commentCount={commentCount} />
+                        <DisplayReply postId={postId} commentCount={commentCount} postUsername={userName} />
                     </Box>
                 </>
             ) : (

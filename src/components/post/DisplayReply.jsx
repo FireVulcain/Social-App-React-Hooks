@@ -15,7 +15,7 @@ import { withFirebase } from "../../config/Firebase/context";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-const DisplayReply = ({ firebase, postId, commentCount }) => {
+const DisplayReply = ({ firebase, postId, commentCount, postUsername }) => {
     const [comments, setComments] = useState([]);
     dayjs.extend(relativeTime);
 
@@ -69,7 +69,7 @@ const DisplayReply = ({ firebase, postId, commentCount }) => {
                                       />
                                   </Box>
                                   <Typography variant="body2" component="p" className="post-reply-to">
-                                      Replying to <Link to={`/user/${comment.userName}`}>@{comment.userName}</Link>
+                                      Replying to <Link to={`/user/${postUsername}`}>@{postUsername}</Link>
                                   </Typography>
                                   <PostBody body={comment.body} postImg={comment.postImg} />
                               </Box>
