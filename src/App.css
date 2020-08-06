@@ -462,11 +462,13 @@ nav.nav-not-logged ul a {
     color: rgb(var(--color-light-grey));
 }
 
-.post-info .post-displayed-name {
+.post-info .post-displayed-name,
+.single-message-info .dm-displayed-name {
     font-weight: bold;
     margin-right: 10px;
 }
-.post-info .post-username {
+.post-info .post-username,
+.single-message-info .dm-username {
     margin-right: 5px;
     color: rgb(var(--color-light-grey));
 }
@@ -850,4 +852,73 @@ nav.nav-not-logged ul a {
     margin-top: 30px;
     text-align: center;
     color: rgb(var(--color-white));
+}
+
+/* Private message - DM */
+.private-message-list {
+    flex: 0 0 30%;
+}
+.single-message-info {
+    border: 1px solid rgb(var(--border-blue));
+    margin: 20px 0 0;
+    padding: 15px;
+}
+.single-message-info:first-of-type {
+    margin-top: 0;
+}
+.single-message-info:last-of-type {
+    border: 1px solid rgb(var(--border-blue));
+    margin-top: 0;
+    border-top: 0;
+}
+.single-message-info .dm-displayed-name {
+    color: rgb(var(--color-white));
+    font-size: 15px;
+}
+
+.list-messages {
+    width: 100%;
+    padding: 0 20px;
+}
+.single-message {
+    margin: 20px 0;
+}
+.sender,
+.recipient {
+    display: flex;
+    width: 100%;
+}
+.sender {
+    justify-content: flex-end;
+}
+.recipient {
+    justify-content: flex-start;
+    margin-left: 10px;
+}
+.single-message span {
+    padding: 10px 15px;
+    border-radius: 1.25rem;
+    -webkit-border-radius: 1.25rem;
+    -moz-border-radius: 1.25rem;
+    -ms-border-radius: 1.25rem;
+    -o-border-radius: 1.25rem;
+}
+.sender span,
+.recipient span {
+    color: #fff;
+    font-size: 15px;
+}
+.sender span {
+    background-color: rgb(var(--color-green));
+    border-bottom-right-radius: 0px;
+}
+.recipient span {
+    background-color: rgb(61, 84, 102);
+    border-bottom-left-radius: 0px;
+}
+
+.single-message .message-date {
+    margin-top: 5px;
+    font-size: 12px;
+    color: rgb(var(--color-light-grey));
 }

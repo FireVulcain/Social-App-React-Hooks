@@ -18,6 +18,7 @@ import Badge from "@material-ui/core/Badge";
 import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import PersonIcon from "@material-ui/icons/Person";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import MailOutlineIcon from "@material-ui/icons/MailOutline";
 
 export const NavigationAuth = () => {
     const { state } = useContext(GlobalContext);
@@ -58,6 +59,11 @@ export const NavigationAuth = () => {
                 <li>
                     <NavLink exact activeClassName="active-menu" to={ROUTES.NOTIFICATIONS}>
                         <IconButton color="primary">{notificationsIcon}</IconButton>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink exact activeClassName="active-menu" to={ROUTES.MESSAGES}>
+                        <IconButton color="primary">{<MailOutlineIcon />}</IconButton>
                     </NavLink>
                 </li>
                 <li>

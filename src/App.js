@@ -10,6 +10,7 @@ import Navigation from "./components/layouts/Navigation";
 import { SignUp } from "./views/SignUp";
 import SignIn from "./views/SignIn";
 import Notifications from "./views/Notifications";
+import PrivateMessages from "./views/PrivateMessages";
 
 /* context */
 import GlobalProvider from "./config/GlobalState/GlobalState";
@@ -34,6 +35,7 @@ const App = () => {
                         <Route exact path={ROUTES.USER} component={User} />
                         <Route exact path={ROUTES.POST} component={Post} />
                         <Route exact path={ROUTES.NOTIFICATIONS} component={Notifications} />
+                        <Route exact path={ROUTES.MESSAGES} component={PrivateMessages} />
                         <Route render={() => <Redirect to="/" />} />
                     </Switch>
                 </Container>

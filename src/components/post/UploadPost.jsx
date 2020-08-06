@@ -88,7 +88,7 @@ const UploadPost = ({ firebase }) => {
     };
 
     const uploadPost = async (postImg) => {
-        await firestore.collection("posts").doc().set({
+        await firestore.collection("posts").add({
             body: postText,
             commentCount: 0,
             createdAt: new Date().toISOString(),
@@ -110,8 +110,6 @@ const UploadPost = ({ firebase }) => {
                 setPostText(startPosition + endPosition + chosenEmoji);
             } else {
                 if (startPosition !== endPosition) {
-                    // setPostText(startPosition + chosenEmoji + endPosition);
-
                     setPostText(startPosition + endPosition + chosenEmoji);
                 } else {
                     setPostText(startPosition + chosenEmoji);
