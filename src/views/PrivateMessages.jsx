@@ -1,4 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+
+import { withRouter } from "react-router-dom";
+
+/* Constants */
+import * as ROUTES from "./../constants/routes";
 
 //context
 import { withFirebase } from "./../config/Firebase/context";
@@ -12,7 +17,7 @@ import { ListPrivateMessages } from "../components/privateMessages/ListPrivateMe
 import Box from "@material-ui/core/Box";
 import ListMessage from "../components/privateMessages/ListMessage";
 
-const PrivateMessages = ({ firebase }) => {
+const PrivateMessages = ({ firebase, match, history }) => {
     const { state } = useContext(GlobalContext);
 
     const {
@@ -24,9 +29,34 @@ const PrivateMessages = ({ firebase }) => {
     const [roomOpen, setRoomOpen] = useState("");
     const [roomUserNotLogged, setRoomUserNotLogged] = useState({});
 
+    useEffect(() => {
+        if (match.params.roomId && userId) {
+            if (match.params.roomId.includes(userId)) {
+                setRoomOpen(match.params.roomId);
+                const availableUser = match.params.roomId.split("-");
+                const roomUserId = availableUser.filter((e) => e !== userId)[0];
+                firebase.firestore
+                    .collection("users")
+                    .where("userId", "==", roomUserId)
+                    .get()
+                    .then((res) => {
+                        res.forEach((element) => {
+                            setRoomUserNotLogged(element.data());
+                        });
+                    });
+            }
+        }
+    }, [match, userId, firebase.firestore]);
+
+    useEffect(() => {
+        if (roomOpen) {
+            history.push(`${ROUTES.MESSAGES}/${roomOpen}`);
+        }
+    }, [roomOpen, history]);
+
     return (
         <Box display="flex" alignItems="align-start">
-            <ListPrivateMessages loggedUserId={userId} firebase={firebase} setRoomOpen={setRoomOpen} setRoomUserNotLogged={setRoomUserNotLogged} />
+            <ListPrivateMessages loggedUserId={userId} firebase={firebase} roomOpen={roomOpen} setRoomOpen={setRoomOpen} />
             {roomOpen && roomOpen !== "" ? (
                 <ListMessage roomOpen={roomOpen} firebase={firebase} loggedUserId={userId} roomUserNotLogged={roomUserNotLogged} />
             ) : null}
@@ -35,4 +65,4 @@ const PrivateMessages = ({ firebase }) => {
 };
 
 const condition = (authUser) => !!authUser;
-export default withAuthorization(condition)(withFirebase(PrivateMessages));
+export default withAuthorization(condition)(withFirebase(withRouter(PrivateMessages)));

@@ -72,16 +72,21 @@ nav.nav-not-logged ul a {
     text-decoration: none;
 }
 .search-user-container .search-input input,
+.private-message-form .message-text-field textarea,
 .search-user-container .search-user-result .user-displayedName {
     color: rgb(var(--color-white));
 }
 
 .search-user-container .search-input .MuiInput-underline:before,
 .search-user-container .search-input .MuiInput-underline:hover:before,
-.search-user-container .search-input .MuiInput-underline:after {
+.search-user-container .search-input .MuiInput-underline:after,
+.private-message-form .message-text-field .MuiInput-underline:before,
+.private-message-form .message-text-field .MuiInput-underline:hover:before,
+.private-message-form .message-text-field .MuiInput-underline:after {
     border: none;
 }
-.search-user-container .search-input {
+.search-user-container .search-input,
+.private-message-form .message-text-field {
     padding: 5px 10px;
     border: 1px solid rgb(37, 51, 65);
     background: rgb(37, 51, 65);
@@ -91,7 +96,8 @@ nav.nav-not-logged ul a {
     -ms-border-radius: 100px;
     -o-border-radius: 100px;
 }
-.search-user-container .search-input-focused {
+.search-user-container .search-input-focused,
+.private-message-form .message-text-field-focused {
     border: 1px solid rgb(var(--color-green));
 }
 
@@ -190,6 +196,9 @@ nav.nav-not-logged ul a {
 .add-reply .text-field {
     padding: 20px 0;
     width: 100%;
+}
+.add-reply.uploading-reply .text-field {
+    opacity: 0.2;
 }
 .upload-post .text-field *,
 .add-reply .text-field * {
@@ -655,6 +664,14 @@ nav.nav-not-logged ul a {
     text-decoration: underline;
 }
 
+.banner-info .banner-action-button {
+    display: flex;
+    align-items: center;
+}
+.banner-info .banner-action-button > button:not(:last-of-type) {
+    margin-right: 10px;
+}
+
 .banner-info .user-following,
 .banner-info .user-followers {
     color: rgb(var(--color-light-grey));
@@ -695,6 +712,16 @@ nav.nav-not-logged ul a {
 .banner-info .unfollow-button:hover {
     background: rgb(var(--color-light-red));
     border: 1px solid rgb(var(--color-light-red));
+}
+
+.banner-info .profile-private-message-button {
+    margin-top: 10px;
+    border: 1px solid rgb(var(--color-green));
+    border-radius: 100%;
+    padding: 6px;
+}
+.banner-info .profile-private-message-button svg {
+    fill: rgb(var(--color-green));
 }
 
 .edit-profile .MuiPaper-root {
@@ -807,6 +834,10 @@ nav.nav-not-logged ul a {
     margin-top: 15px;
     border-bottom: 0;
 }
+.notifications-container .notification-item:last-of-type {
+    margin-top: 15px;
+    border: 1px solid rgb(var(--border-blue));
+}
 .notifications-container .notification-item .avatar,
 .notifications-container .notification-item svg {
     width: 30px;
@@ -860,16 +891,21 @@ nav.nav-not-logged ul a {
 }
 .single-message-info {
     border: 1px solid rgb(var(--border-blue));
-    margin: 20px 0 0;
     padding: 15px;
+    cursor: pointer;
+    border-top: 0;
+}
+
+.single-message-info:last-of-type {
+    margin-top: 0;
+    border-top: 0;
 }
 .single-message-info:first-of-type {
     margin-top: 0;
+    border-top: 1px solid rgb(var(--border-blue));
 }
-.single-message-info:last-of-type {
-    border: 1px solid rgb(var(--border-blue));
-    margin-top: 0;
-    border-top: 0;
+.single-message-info.active-room {
+    border-right-color: rgb(var(--color-green));
 }
 .single-message-info .dm-displayed-name {
     color: rgb(var(--color-white));
@@ -877,11 +913,22 @@ nav.nav-not-logged ul a {
 }
 
 .list-messages {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: calc(100vh - 94px);
     width: 100%;
-    padding: 0 20px;
+    border: 1px solid rgb(var(--border-blue));
 }
-.single-message {
+.list-messages > div {
+    overflow-y: scroll;
+    max-height: calc(100% - 49px);
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+.list-messages .single-message {
     margin: 20px 0;
+    padding: 0 20px;
 }
 .sender,
 .recipient {
@@ -921,4 +968,26 @@ nav.nav-not-logged ul a {
     margin-top: 5px;
     font-size: 12px;
     color: rgb(var(--color-light-grey));
+}
+
+.private-message-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    border-top: 1px solid rgb(var(--border-blue));
+}
+.private-message-form .message-text-field {
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 17px;
+}
+
+.list-messages .send-message-button svg {
+    fill: rgb(var(--color-green));
+}
+
+.list-messages .send-message-button:disabled svg {
+    opacity: 0.5;
 }

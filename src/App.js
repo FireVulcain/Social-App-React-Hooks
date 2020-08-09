@@ -36,6 +36,7 @@ const App = () => {
                         <Route exact path={ROUTES.POST} component={Post} />
                         <Route exact path={ROUTES.NOTIFICATIONS} component={Notifications} />
                         <Route exact path={ROUTES.MESSAGES} component={PrivateMessages} />
+                        <Route exact path={`${ROUTES.MESSAGES}/:roomId`} component={PrivateMessages} />
                         <Route render={() => <Redirect to="/" />} />
                     </Switch>
                 </Container>

@@ -62,7 +62,7 @@ export const NavigationAuth = () => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink exact activeClassName="active-menu" to={ROUTES.MESSAGES}>
+                    <NavLink activeClassName="active-menu" to={ROUTES.MESSAGES}>
                         <IconButton color="primary">{<MailOutlineIcon />}</IconButton>
                     </NavLink>
                 </li>

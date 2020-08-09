@@ -92,6 +92,7 @@ const Posts = ({ firebase, singleUserPosts }) => {
             {posts.map((post) => {
                 return (
                     <Box width={1} display="flex" alignItems="flex-start" className="post-info" key={post.id}>
+                        <Link className="post-global-link" to={`/${userName}/post/${post.id}`}></Link>
                         <UserAvatar userImage={post.userImage} userName={post.userName} />
                         <Box width={1}>
                             <Box display="flex" alignItems="baseline">

@@ -7,9 +7,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-export const ListPrivateMessages = ({ loggedUserId, firebase, setRoomOpen, setRoomUserNotLogged }) => {
+export const ListPrivateMessages = ({ loggedUserId, firebase, roomOpen, setRoomOpen }) => {
     const [rooms, setRooms] = useState([]);
-
     const [listUsers, setListUsers] = useState([]);
 
     useEffect(() => {
@@ -59,10 +58,9 @@ export const ListPrivateMessages = ({ loggedUserId, firebase, setRoomOpen, setRo
                               display="flex"
                               alignItems="center"
                               key={key}
-                              className="single-message-info"
+                              className={`single-message-info ${roomOpen === user.roomKey ? "active-room" : ""}`}
                               onClick={() => {
                                   setRoomOpen(`${user.roomKey}`);
-                                  setRoomUserNotLogged(user);
                               }}
                           >
                               <Link to={`/user/${user.userName}`}>

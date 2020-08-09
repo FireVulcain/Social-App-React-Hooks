@@ -20,6 +20,7 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 const CommentButton = ({ firebase, commentCount, postId, userName, userImage, displayedName }) => {
     const [open, setOpen] = useState(false);
     const [replyText, setreplyText] = useState("");
+    const [uploadLoading, setUploadLoading] = useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -30,6 +31,7 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage, di
     };
 
     const handleComment = async () => {
+        setUploadLoading(true);
         const postRef = firebase.firestore.collection("posts").doc(postId);
 
         const getPost = await postRef.get();
@@ -59,7 +61,7 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage, di
                 type: "comment",
             });
         }
-
+        setUploadLoading(false);
         handleClose();
     };
 
@@ -77,7 +79,7 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage, di
                     </Typography>
                 ) : null}
             </div>
-            <Dialog open={open} onClose={handleClose} className="add-reply dialogbox" fullWidth={true}>
+            <Dialog open={open} onClose={handleClose} className={`add-reply dialogbox ${uploadLoading ? "uploading-reply" : ""}`} fullWidth={true}>
                 <DialogContent>
                     <Box display="flex" alignItems="center">
                         <Avatar alt={userName} src={userImage} className="avatar" />
@@ -92,9 +94,11 @@ const CommentButton = ({ firebase, commentCount, postId, userName, userImage, di
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button className="submit-button" disabled={!replyText && true} onClick={handleComment}>
-                        Reply
-                    </Button>
+                    {!uploadLoading ? (
+                        <Button className="submit-button" disabled={!replyText && true} onClick={handleComment}>
+                            Reply
+                        </Button>
+                    ) : null}
                 </DialogActions>
             </Dialog>
         </>

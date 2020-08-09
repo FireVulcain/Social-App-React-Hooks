@@ -3,6 +3,11 @@ import { withRouter } from "react-router-dom";
 import dayjs from "dayjs";
 import { compose } from "recompose";
 
+/* Components */
+import PrivateMessage from "./PrivateMessage";
+import EditProfile from "./EditProfile";
+import { Follow } from "./Follow";
+
 /* Constants */
 import * as ROUTES from "./../../constants/routes";
 
@@ -19,8 +24,6 @@ import Button from "@material-ui/core/Button";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import LinkIcon from "@material-ui/icons/Link";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import EditProfile from "./EditProfile";
-import { Follow } from "./Follow";
 
 const Banner = ({ firebase, userName, loggedUser, history }) => {
     const [user, setUser] = useState({});
@@ -115,9 +118,10 @@ const Banner = ({ firebase, userName, loggedUser, history }) => {
                                 <EditProfile open={open} handleClose={handleClose} user={user} firebase={firebase} />
                             </>
                         ) : (
-                            <>
+                            <div className="banner-action-button">
                                 <Follow loggedUser={loggedUser} userName={userName} firebase={firebase} />
-                            </>
+                                <PrivateMessage loggedUser={loggedUser} userName={userName} firebase={firebase} />
+                            </div>
                         )}
                     </div>
                 </div>
