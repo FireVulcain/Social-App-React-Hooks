@@ -50,7 +50,13 @@ const Posts = ({ firebase, singleUserPosts }) => {
                 setPosts([]);
                 result();
             };
-        } else if (userName) {
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [singleUserPosts]);
+
+    useEffect(() => {
+        if (userName && !singleUserPosts) {
             let listPostToDisplay = [userName];
             let result;
 
@@ -84,9 +90,9 @@ const Posts = ({ firebase, singleUserPosts }) => {
                 }
             };
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [singleUserPosts, userName]);
+    }, [userName]);
+
     return (
         <>
             {posts.map((post) => {

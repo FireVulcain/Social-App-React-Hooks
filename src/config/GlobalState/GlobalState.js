@@ -28,12 +28,13 @@ const GlobalProvider = ({ firebase, children }) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
     useEffect(() => {
+        let listener;
         firebase.auth.onAuthStateChanged(function (user) {
             if (user) {
                 const getUser = async (userId) => {
                     const result = await firebase.firestore.collection("users").where("userId", "==", userId).get();
-                    result.forEach(async (user) => {
-                        await firebase.firestore
+                    result.forEach((user) => {
+                        listener = firebase.firestore
                             .collection("notifications")
                             .where("recipient", "==", user.data().userName)
                             .orderBy("createdAt", "desc")
@@ -65,6 +66,9 @@ const GlobalProvider = ({ firebase, children }) => {
                 };
                 getUser(user.uid);
             } else {
+                if (typeof listener === "function") {
+                    listener();
+                }
                 dispatch({
                     type: "LOGOUT_USER",
                 });
