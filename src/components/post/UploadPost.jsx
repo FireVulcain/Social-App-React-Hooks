@@ -71,7 +71,7 @@ const UploadPost = ({ firebase }) => {
             })
             .catch((err) => {
                 setUploadLoading(false);
-                console.log.log(err);
+                console.log(err);
             });
     };
     const handleUploadFile = (e) => {
@@ -157,7 +157,7 @@ const UploadPost = ({ firebase }) => {
 
                         <Box display="flex" alignItems="center" justifyContent="space-between">
                             <Box display="flex" alignItems="center" justifyContent="space-between">
-                                <ImagesUpload chosenGif={chosenGif} handleUploadFile={handleUploadFile} />
+                                <ImagesUpload chosenGif={chosenGif} handleUploadFile={handleUploadFile} multiple={true} />
                                 <EmojiPicker setChosenEmoji={setChosenEmoji} />
                                 <GifPicker uploadedImg={uploadedImg} setChosenGif={setChosenGif} />
                             </Box>

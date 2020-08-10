@@ -5,14 +5,14 @@ import IconButton from "@material-ui/core/IconButton";
 /* Material UI Icons */
 import CropOriginalOutlinedIcon from "@material-ui/icons/CropOriginalOutlined";
 
-export const ImagesUpload = ({ chosenGif, handleUploadFile }) => {
+export const ImagesUpload = ({ chosenGif, handleUploadFile, multiple }) => {
     return (
         <>
             <input
                 accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"
                 hidden
                 id="icon-button-file"
-                multiple
+                multiple={multiple}
                 type="file"
                 onChange={handleUploadFile}
                 disabled={chosenGif !== null}

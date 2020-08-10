@@ -46,6 +46,7 @@ const ListMessage = ({ roomOpen, firebase, loggedUserId, roomUserNotLogged }) =>
                             const userLink = loggedUserId === message.recipientId ? roomUserNotLogged.userName : null;
 
                             const classNameMsg = loggedUserId === message.senderId ? "sender" : "recipient";
+                            const classNameImg = message.contentImg ? " withImg" : "";
                             return (
                                 <div className="single-message" key={key}>
                                     {profilePicture && userLink ? (
@@ -60,10 +61,13 @@ const ListMessage = ({ roomOpen, firebase, loggedUserId, roomUserNotLogged }) =>
                                             </div>
                                         </Box>
                                     ) : (
-                                        <div className={`${classNameMsg}`}>
-                                            <Typography component="span" variant="body2">
-                                                {message.content}
-                                            </Typography>
+                                        <div className={`${classNameMsg} ${classNameImg} `}>
+                                            {message.contentImg ? <img src={message.contentImg} alt="" /> : null}
+                                            {message.content ? (
+                                                <Typography component="span" variant="body2">
+                                                    {message.content}
+                                                </Typography>
+                                            ) : null}
                                         </div>
                                     )}
                                     <Typography component="div" variant="body2" className={`${classNameMsg} message-date`}>

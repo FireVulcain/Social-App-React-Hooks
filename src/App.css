@@ -228,6 +228,7 @@ nav.nav-not-logged ul a {
     opacity: 0.5;
 }
 .upload-post .upload-img svg,
+.private-message-form .upload-img svg,
 .upload-post .add-smiley svg,
 .upload-post .add-gif-button svg,
 .upload-post .delete-img-post svg,
@@ -235,6 +236,7 @@ nav.nav-not-logged ul a {
     fill: rgb(var(--color-green));
 }
 .upload-post .upload-img:hover,
+.private-message-form .upload-img:hover,
 .upload-post .add-smiley:hover,
 .upload-post .add-gif-button:hover {
     background: rgba(var(--color-green), 0.1);
@@ -934,10 +936,34 @@ nav.nav-not-logged ul a {
 .recipient {
     display: flex;
     width: 100%;
+    flex-direction: column;
 }
 .sender {
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
 }
+.recipient {
+    align-items: flex-start;
+}
+.single-message > div > img {
+    max-width: 340px;
+    border-radius: 1.25rem;
+}
+.single-message > div.sender.withImg > img {
+    border-bottom-right-radius: 0;
+}
+.single-message > div.sender.withImg > span {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+.single-message > div.recipient.withImg > img {
+    border-bottom-left-radius: 0;
+}
+.single-message > div.recipient.withImg > span {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
 .recipient {
     justify-content: flex-start;
     margin-left: 10px;
@@ -976,6 +1002,30 @@ nav.nav-not-logged ul a {
     justify-content: space-between;
     padding: 0 10px;
     border-top: 1px solid rgb(var(--border-blue));
+}
+.private-message-form.withImg {
+    flex-direction: column;
+    align-items: flex-start;
+}
+.private-message-form.uploading-message {
+    opacity: 0.5;
+}
+.private-message-form .upload-img {
+    margin-right: 10px;
+}
+.private-message-form .img-upload-preview img {
+    max-height: 150px;
+    margin: 10px 10px 10px 0;
+    border-radius: 1.25rem;
+}
+.private-message-form .img-upload-preview .delete-img-message svg {
+    fill: rgb(var(--color-green));
+}
+
+.private-message-form .text-field-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
 }
 .private-message-form .message-text-field {
     width: 100%;
