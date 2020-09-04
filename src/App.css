@@ -336,6 +336,9 @@ nav.nav-not-logged ul a {
     transition-duration: 0.2s;
     cursor: pointer;
 }
+.post-info:last-of-type {
+    margin-bottom: 30px;
+}
 .post-info:hover {
     background-color: rgb(var(--color-bg-dark-hover));
 }
@@ -1040,4 +1043,13 @@ nav.nav-not-logged ul a {
 
 .list-messages .send-message-button:disabled svg {
     opacity: 0.5;
+}
+
+@media screen and (max-width: 767px) {
+    .post-info .post-body a,
+    .post-info .post-body a > div,
+    .post-info .post-body a > div img {
+        width: 100% !important;
+        height: auto !important;
+    }
 }

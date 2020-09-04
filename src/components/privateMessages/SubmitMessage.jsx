@@ -38,6 +38,13 @@ export const SubmitMessage = ({ firebase, roomOpen, roomUserNotLogged, loggedUse
         setUploadLoading(false);
     };
 
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            handleSubmit(e);
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setUploadLoading(true);
@@ -81,6 +88,7 @@ export const SubmitMessage = ({ firebase, roomOpen, roomUserNotLogged, loggedUse
                     onFocus={() => setIsFocus(true)}
                     onBlur={() => setIsFocus(false)}
                     disabled={uploadLoading}
+                    onKeyPress={(e) => handleKeyPress(e)}
                 />
                 <IconButton
                     disabled={(message === "" && uploadedImg === "") || uploadLoading}
