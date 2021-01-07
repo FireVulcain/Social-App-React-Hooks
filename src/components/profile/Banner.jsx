@@ -49,6 +49,7 @@ const Banner = ({ firebase, userName, loggedUser, history }) => {
 
     useEffect(() => {
         if (userName === loggedUser) return setIsUserProfile(true);
+        if (userName !== loggedUser) return setIsUserProfile(false);
     }, [loggedUser, userName]);
 
     return (
@@ -89,7 +90,7 @@ const Banner = ({ firebase, userName, loggedUser, history }) => {
                         <Typography variant="body2" className="user-bio">
                             {user.bio}
                         </Typography>
-                        <Box display="flex" alignItems="center" mt={1}>
+                        <Box display="flex" alignItems="center" mt={1} flexWrap="wrap">
                             <Typography variant="body2" className="user-location">
                                 <LocationOnIcon /> {user.location}
                             </Typography>
