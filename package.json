@@ -20,9 +20,9 @@
         "react-linkify": "^1.0.0-alpha",
         "react-modal-image": "^2.5.0",
         "react-router-dom": "^5.2.0",
-        "react-scripts": "3.4.1",
+        "react-scripts": "^3.4.4",
         "react-twemoji": "^0.2.3",
-        "recompose": "^0.30.0",
+        "recompose": "^0.17.0",
         "uuid": "^8.2.0"
     },
     "scripts": {

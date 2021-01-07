@@ -4,7 +4,7 @@ import "./App.css";
 
 /* components */
 import Home from "./views/Home";
-import { Post } from "./views/Post";
+import Post from "./views/Post";
 import User from "./views/User";
 import Navigation from "./components/layouts/Navigation";
 import { SignUp } from "./views/SignUp";
